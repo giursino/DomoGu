@@ -10,6 +10,9 @@ KnxDriver* KnxDriver::create_knx_driver(KnxDriver::DriverType interface)
     if (interface == KnxDriver::KNX_TINY_SERIAL) {
         return new KnxTinySerial();
     }
+    if (interface == KnxDriver::FAKE_DRIVER) {
+        return new KnxFakeDriver();
+    }
     else {
         FILE_LOG(logERROR) << "Driver not implemented";
         return new KnxFakeDriver();

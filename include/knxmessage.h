@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <string>
 
 class KnxAddr
 {
@@ -39,6 +40,8 @@ public:
 
     bool set_raw(const std::vector<std::uint8_t> message);
     bool get_raw(std::vector<std::uint8_t> &message);
+
+    std::string get_string() const;
 
     int get_src();
     int get_dest();

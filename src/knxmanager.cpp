@@ -51,7 +51,7 @@ bool KnxManager::Deregister(KnxClientInterface *client)
     }
 }
 
-bool KnxManager::SendMessage(const KnxMessage &message)
+bool KnxManager::SendMessage(const KnxMessage &message) const
 {
     return m_driver->write(message);
 }

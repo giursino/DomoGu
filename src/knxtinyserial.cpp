@@ -10,7 +10,7 @@ bool KnxTinySerial::read(KnxMessage &message)
 
 }
 
-bool KnxTinySerial::write(const KnxMessage message)
+bool KnxTinySerial::write(const KnxMessage &message)
 {
 
 }

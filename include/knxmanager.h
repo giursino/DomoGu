@@ -18,7 +18,7 @@ public:
 
     bool Deregister(KnxClientInterface *client);
 
-    bool SendMessage(const KnxMessage &message);
+    bool SendMessage(const KnxMessage &message) const;
 
 private:
     KnxDriver* m_driver;

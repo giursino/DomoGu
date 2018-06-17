@@ -9,7 +9,7 @@ public:
     KnxTinySerial();
 
     bool read(KnxMessage &message);
-    bool write(const KnxMessage message);
+    bool write(const KnxMessage &message);
 };
 
 #endif // KNXTINYSERIAL_H

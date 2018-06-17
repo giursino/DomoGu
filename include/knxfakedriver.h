@@ -9,7 +9,7 @@ public:
     KnxFakeDriver();
 
     bool read(KnxMessage &message);
-    bool write(const KnxMessage message);
+    bool write(const KnxMessage &message);
 };
 
 #endif // KNXFAKEDRIVER_H

@@ -9,6 +9,7 @@ class KnxDriver
 public:
 
     typedef enum {
+        FAKE_DRIVER,
         VIMAR_01847,
         KNX_TINY_SERIAL
 
@@ -20,7 +21,7 @@ public:
     bool deinit();
 
     virtual bool read(KnxMessage &message) = 0;
-    virtual bool write(const KnxMessage message) = 0;
+    virtual bool write(const KnxMessage &message) = 0;
 
 };
 
