@@ -3,6 +3,8 @@
 
 #include "knxdriver.h"
 
+class KnxMessage;
+
 class KnxFakeDriver : public KnxDriver
 {
 public:
@@ -10,6 +12,9 @@ public:
 
     bool read(KnxMessage &message);
     bool write(const KnxMessage &message);
+
+private:
+    //KnxMessage m_buffer;
 };
 
 #endif // KNXFAKEDRIVER_H
