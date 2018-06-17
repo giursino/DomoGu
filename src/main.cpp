@@ -12,14 +12,12 @@ int main()
 
     FILE_LOG(logDEBUG) << "Starting DomoGu...";
 
-    /*KnxManager* knxManager = new KnxManager::KnxManager(KnxDriver::KNX_TINY_SERIAL);
-    AppGraphTemperature* appTemperature = new AppGraphTemperature::AppGraphTemperature();
+    KnxManager *knxManager = new KnxManager(KnxDriver::KNX_TINY_SERIAL);
+    AppGraphTemperature* appTemperature = new AppGraphTemperature();
 
     knxManager->Register(appTemperature);
 
-
     knxManager->Loop();
 
-*/
     return 0;
 }
