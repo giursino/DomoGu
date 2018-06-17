@@ -1,11 +1,13 @@
-#ifndef KNXINTERFACE_H
-#define KNXINTERFACE_H
+#ifndef KNXDRIVER_H
+#define KNXDRIVER_H
 
 #include "knxmessage.h"
+
 
 class KnxDriver
 {
 public:
+
     typedef enum {
         VIMAR_01847,
         KNX_TINY_SERIAL
@@ -22,4 +24,4 @@ public:
 
 };
 
-#endif // KNXINTERFACE_H
+#endif // KNXDRIVER_H
