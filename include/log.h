@@ -183,7 +183,7 @@ namespace log
 #define FILE_LOG(level)							\
     if (level > LOG_MAX_LEVEL) ;					\
     else if (level > FILELog::ReportingLevel() || !Output2FILE::Stream()) ; \
-    else FILELog().Get(level) << __FILE__ << ":" << __LINE__ << " " << __FUNCTION__  << " "
+    else FILELog().Get(level) << __FILE__ << ":" << __LINE__ << " (" << __FUNCTION__  << ") "
 
 
     inline void LogSetLevel(const std::string& levelName) { FILELog::ReportingLevel() = FILELog::FromString(levelName); }

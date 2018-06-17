@@ -10,6 +10,8 @@ KnxManager::KnxManager(KnxDriver::DriverType driver)
 
 KnxManager::~KnxManager()
 {
+    KnxManager::m_clients.clear();
+
     if (m_driver) {
         m_driver->deinit();
         delete m_driver;
@@ -18,6 +20,10 @@ KnxManager::~KnxManager()
 
 void KnxManager::Loop()
 {
+    // TODO test
+    for (std::set<KnxClientInterface *>::iterator it=m_clients.begin(); it!=m_clients.end(); ++it) {
+        (*it)->OnMessageReceived();
+    }
 
 }
 
