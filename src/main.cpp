@@ -1,3 +1,5 @@
+#include "knxmanager.h"
+#include "appgraphtemperature.h"
 #include "log.h"
 #include <iostream>
 
@@ -9,6 +11,15 @@ int main()
     FILELog::ReportingLevel() = logTRACE;
 
     FILE_LOG(logDEBUG) << "Starting DomoGu...";
+
+    KnxManager* knxManager = new KnxManager::KnxManager(KnxDriver::KNX_TINY_SERIAL);
+    AppGraphTemperature* appTemperature = new AppGraphTemperature::AppGraphTemperature();
+
+    knxManager->Register(appTemperature);
+
+
+    knxManager->Loop();
+
 
     return 0;
 }
