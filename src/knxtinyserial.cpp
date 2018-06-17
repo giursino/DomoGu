@@ -1,6 +1,16 @@
-#include "tapkotinyserial.h"
+#include "knxtinyserial.h"
 
-TapkoTinySerial::TapkoTinySerial()
+KnxTinySerial::KnxTinySerial()
+{
+
+}
+
+bool KnxTinySerial::read(KnxMessage &message)
+{
+
+}
+
+bool KnxTinySerial::write(const KnxMessage message)
 {
 
 }

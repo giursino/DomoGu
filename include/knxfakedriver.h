@@ -1,12 +1,12 @@
-#ifndef TAPKOTINYSERIAL_H
-#define TAPKOTINYSERIAL_H
+#ifndef KNXFAKEDRIVER_H
+#define KNXFAKEDRIVER_H
 
 #include "knxdriver.h"
 
-class KnxTinySerial : public KnxDriver
+class KnxFakeDriver : public KnxDriver
 {
 public:
-    KnxTinySerial();
+    KnxFakeDriver();
 
     // KnxDriver interface
 public:
@@ -14,4 +14,4 @@ public:
     bool write(const KnxMessage message);
 };
 
-#endif // TAPKOTINYSERIAL_H
+#endif // KNXFAKEDRIVER_H

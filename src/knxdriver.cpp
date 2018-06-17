@@ -1,13 +1,18 @@
 #include "knxdriver.h"
+#include "knxtinyserial.h"
+#include "knxfakedriver.h"
 
-using namespace KnxDriver;
-
-KnxDriver* create_knx_interface(DriverType interface)
+KnxDriver* KnxDriver::create_knx_driver(KnxDriver::DriverType interface)
 {
-    if (interface == DriverType::TAPKO_KNX_TINY_SERIAL) {
-
+    if (interface == KnxDriver::KNX_TINY_SERIAL) {
+        return new KnxTinySerial();
     }
     else {
-        return new KnxVoidInterface;
+        return new KnxFakeDriver();
     }
+}
+
+bool KnxDriver::init()
+{
+
 }

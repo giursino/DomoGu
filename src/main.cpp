@@ -1,12 +1,14 @@
+#include "log.h"
 #include <iostream>
 
 using namespace std;
+using namespace log;
 
 int main()
 {
-    volatile int a=0;
-    a++;
-    a++;
-    cout << "Hello World! " << "a=" << a <<endl;
+    FILELog::ReportingLevel() = logTRACE;
+
+    FILE_LOG(logDEBUG) << "Starting DomoGu...";
+
     return 0;
 }

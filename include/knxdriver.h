@@ -1,19 +1,24 @@
 #ifndef KNXINTERFACE_H
 #define KNXINTERFACE_H
 
+#include "knxmessage.h"
 
 class KnxDriver
 {
 public:
     typedef enum {
-        TPUART,
         VIMAR_01847,
-        TAPKO_KNX_TINY_SERIAL
+        KNX_TINY_SERIAL
 
     } DriverType;
 
-    static KnxDriver* create_knx_interface(DriverType interface);
+    static KnxDriver* create_knx_driver(DriverType type);
 
+    bool init();
+    bool deinit();
+
+    virtual bool read(KnxMessage &message) = 0;
+    virtual bool write(const KnxMessage message) = 0;
 
 };
 

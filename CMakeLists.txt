@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
 project(DomoGu)
 
@@ -22,3 +22,11 @@ target_link_libraries(${TARGET_NAME}
   #fcgi
   #fcgi++
 )
+
+# enable support for c++11
+#set (CMAKE_CXX_STANDARD 11)
+
+# enable GNU extensions for c++11
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+
+
