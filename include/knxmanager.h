@@ -14,10 +14,11 @@ public:
 
     void Loop();
 
-    bool Register(const KnxClientInterface *client);
-    bool Deregister(const KnxClientInterface *client);
+    bool Register(KnxClientInterface *client);
 
-    void SendMessage(const KnxMessage &message);
+    bool Deregister(KnxClientInterface *client);
+
+    bool SendMessage(const KnxMessage &message);
 
 private:
     KnxDriver* m_driver;

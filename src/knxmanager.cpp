@@ -21,7 +21,7 @@ void KnxManager::Loop()
 
 }
 
-bool KnxManager::Register(const KnxClientInterface *client)
+bool KnxManager::Register(KnxClientInterface *client)
 {
     if (KnxManager::m_clients.insert(client).second) {
         FILE_LOG(logDEBUG) << "Client registered";
@@ -33,7 +33,7 @@ bool KnxManager::Register(const KnxClientInterface *client)
     }
 }
 
-bool KnxManager::Deregister(const KnxClientInterface *client)
+bool KnxManager::Deregister(KnxClientInterface *client)
 {
     if (KnxManager::m_clients.erase(client) == 1) {
         FILE_LOG(logDEBUG) << "Client deregistered";
@@ -45,7 +45,7 @@ bool KnxManager::Deregister(const KnxClientInterface *client)
     }
 }
 
-void KnxManager::SendMessage(const KnxMessage &message)
+bool KnxManager::SendMessage(const KnxMessage &message)
 {
     return m_driver->write(message);
 }
