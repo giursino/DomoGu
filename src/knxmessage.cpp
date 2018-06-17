@@ -1,4 +1,6 @@
 #include "knxmessage.h"
+#include <sstream>
+#include <iomanip>
 
 KnxMessage::KnxMessage(const std::vector<uint8_t> message)
 {
@@ -19,10 +21,9 @@ bool KnxMessage::get_raw(std::vector<uint8_t> &message)
 
 std::string KnxMessage::get_string() const
 {
-    std::string strMessage;
+    std::stringstream ssMessage;
     for (auto byte=m_message.begin(); byte!=m_message.end(); byte++) {
-        //strMessage << (*byte) << " ";
+        ssMessage << "0x" << std::hex << std::to_string(*byte) << " ";
     }
-    //strMessage << std::endl;
-    return strMessage;
+    return ssMessage.str();
 }
