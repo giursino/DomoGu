@@ -23,6 +23,7 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxDriver.h"
 #include "KnxTinySerial.h"
 #include "KnxFakeDriver.h"
+#include "KnxEchoDriver.h"
 #include "log.h"
 
 using namespace log;
@@ -32,8 +33,8 @@ KnxDriver* KnxDriver::create_knx_driver(KnxDriver::DriverType interface)
     if (interface == KnxDriver::KNX_TINY_SERIAL) {
         return new KnxTinySerial();
     }
-    if (interface == KnxDriver::FAKE_DRIVER) {
-        return new KnxFakeDriver();
+    if (interface == KnxDriver::ECHO_DRIVER) {
+        return new KnxEchoDriver();
     }
     else {
         FILE_LOG(logERROR) << "Driver not implemented";

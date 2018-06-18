@@ -34,7 +34,7 @@ int main()
 
     FILE_LOG(logDEBUG) << "Starting DomoGu...";
 
-    KnxManager *knxManager = new KnxManager(KnxDriver::FAKE_DRIVER);
+    KnxManager *knxManager = new KnxManager(KnxDriver::ECHO_DRIVER);
     AppGraphTemperature* appTemperature1 = new AppGraphTemperature(knxManager);
     AppGraphTemperature* appTemperature2 = new AppGraphTemperature(knxManager);
 

@@ -32,6 +32,7 @@ public:
 
     typedef enum {
         FAKE_DRIVER,
+        ECHO_DRIVER,
         VIMAR_01847,
         KNX_TINY_SERIAL
 

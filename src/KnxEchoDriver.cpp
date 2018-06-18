@@ -20,19 +20,26 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef KNXFAKEDRIVER_H
-#define KNXFAKEDRIVER_H
+#include "KnxEchoDriver.h"
 
-#include "KnxDriver.h"
+#include "log.h"
 
-class KnxFakeDriver : public KnxDriver
+using namespace log;
+
+KnxEchoDriver::KnxEchoDriver():
+    m_buffer({0xDE, 0xAD, 0xBE, 0xEF})
 {
-public:
-    KnxFakeDriver();
+}
 
-    bool read(KnxMessage &message);
-    bool write(const KnxMessage &message);
+bool KnxEchoDriver::read(KnxMessage &message)
+{
+    message = m_buffer;
+    return true;
+}
 
-};
-
-#endif // KNXFAKEDRIVER_H
+bool KnxEchoDriver::write(const KnxMessage &message)
+{
+    std::lock_guard<std::mutex> guard(m_buffer_mutex);
+    m_buffer = message;
+    return true;
+}
