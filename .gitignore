@@ -31,4 +31,6 @@
 *.out
 *.app
 CMakeLists.txt.user
-build-DomoGu-Raspberry-Default
+
+# Build
+build-*
