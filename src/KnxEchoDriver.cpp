@@ -27,19 +27,33 @@ DEALINGS IN THE SOFTWARE.
 using namespace log;
 
 KnxEchoDriver::KnxEchoDriver():
-    m_buffer({0xDE, 0xAD, 0xBE, 0xEF})
+    m_buffer({0xDE, 0xAD, 0xBE, 0xEF}),
+    m_is_there_data_to_read(true)
 {
+
 }
 
 bool KnxEchoDriver::read(KnxMessage &message)
 {
-    message = m_buffer;
-    return true;
+    // TODO: no thread safe
+    if (m_is_there_data_to_read) {
+        m_is_there_data_to_read = false;
+        message = m_buffer;
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 bool KnxEchoDriver::write(const KnxMessage &message)
 {
+    if (m_is_there_data_to_read) {
+        FILE_LOG(logWARNING) << "Losing previous data: " << m_buffer.get_string();
+    }
+    FILE_LOG(logINFO) << "Writing: " << message.get_string();
     std::lock_guard<std::mutex> guard(m_buffer_mutex);
     m_buffer = message;
+    m_is_there_data_to_read = true;
     return true;
 }

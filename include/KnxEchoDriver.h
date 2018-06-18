@@ -37,6 +37,7 @@ public:
 private:
     std::mutex m_buffer_mutex;
     KnxMessage m_buffer;
+    bool m_is_there_data_to_read;
 };
 
 #endif // KNXECHODRIVER_H

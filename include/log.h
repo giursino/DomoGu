@@ -88,15 +88,15 @@ namespace log
     template <typename T> std::string Log<T>::ToString(LogLevel level)
     {
     static const char* const buffer[] = {
-        "ERROR",
+        "ERROR  ",
         "WARNING",
-        "INFO",
-        "DEBUG",
-        "DEBUG1",
-        "DEBUG2",
-        "DEBUG3",
-        "DEBUG4",
-        "TRACE"
+        "INFO   ",
+        "DEBUG  ",
+        "DEBUG1 ",
+        "DEBUG2 ",
+        "DEBUG3 ",
+        "DEBUG4 ",
+        "TRACE  "
     };
     return buffer[level];
     }
@@ -183,7 +183,7 @@ namespace log
 #define FILE_LOG(level)							\
     if (level > LOG_MAX_LEVEL) ;					\
     else if (level > FILELog::ReportingLevel() || !Output2FILE::Stream()) ; \
-    else FILELog().Get(level) << __FILE__ << ":" << __LINE__ << " (" << __FUNCTION__  << ") "
+    else FILELog().Get(level) <<  __FILE__ << ":" << __LINE__ << " (" << __FUNCTION__  << ") "
 
 
     inline void LogSetLevel(const std::string& levelName) { FILELog::ReportingLevel() = FILELog::FromString(levelName); }
