@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxMessage.h"
 #include "KnxClientInterface.h"
 #include <set>
+#include <thread>
 
 class KnxManager
 {
@@ -34,7 +35,7 @@ public:
     KnxManager(KnxDriver::DriverType driver);
     ~KnxManager();
 
-    void Loop();
+    static void Loop();
 
     bool Register(KnxClientInterface *client);
 
@@ -45,6 +46,7 @@ public:
 private:
     KnxDriver* m_driver;
     std::set<KnxClientInterface *> m_clients;
+    std::thread m_rx_thread;
 };
 
 #endif // KNXMANAGER_H

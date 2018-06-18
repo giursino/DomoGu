@@ -29,11 +29,16 @@ KnxManager::KnxManager(KnxDriver::DriverType driver)
 {
     m_driver = KnxDriver::create_knx_driver(driver);
     m_driver->init();
+
+    m_rx_thread(KnxManager::Loop);
+
 }
 
 KnxManager::~KnxManager()
 {
     KnxManager::m_clients.clear();
+
+    m_rx_thread.join();
 
     if (m_driver) {
         m_driver->deinit();
