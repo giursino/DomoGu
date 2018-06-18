@@ -21,7 +21,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include "KnxFakeDriver.h"
-#include "Log.h"
+#include "log.h"
 
 using namespace log;
 

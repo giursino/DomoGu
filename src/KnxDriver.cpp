@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxDriver.h"
 #include "KnxTinySerial.h"
 #include "KnxFakeDriver.h"
-#include "Log.h"
+#include "log.h"
 
 using namespace log;
 

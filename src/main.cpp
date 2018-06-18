@@ -22,7 +22,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "KnxManager.h"
 #include "AppGraphTemperature.h"
-#include "Log.h"
+#include "log.h"
 #include <iostream>
 
 using namespace std;
