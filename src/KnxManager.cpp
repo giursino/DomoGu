@@ -28,6 +28,7 @@ using namespace log;
 KnxManager::KnxManager(KnxDriver::DriverType driver)
 {
     m_driver = KnxDriver::create_knx_driver(driver);
+    m_driver->init();
 }
 
 KnxManager::~KnxManager()
@@ -42,9 +43,13 @@ KnxManager::~KnxManager()
 
 void KnxManager::Loop()
 {
-    // TODO test
+    KnxMessage message;
+
+    m_driver->read(message);
+    FILE_LOG(logDEBUG) << "Received message: " << message.get_string();
+
     for (std::set<KnxClientInterface *>::iterator it=m_clients.begin(); it!=m_clients.end(); ++it) {
-        (*it)->OnMessageReceived();
+        (*it)->OnMessageReceived(message);
     }
 
 }

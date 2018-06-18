@@ -40,8 +40,8 @@ public:
 
     static KnxDriver* create_knx_driver(DriverType type);
 
-    bool init();
-    bool deinit();
+    virtual bool init();
+    virtual bool deinit();
 
     virtual bool read(KnxMessage &message) = 0;
     virtual bool write(const KnxMessage &message) = 0;

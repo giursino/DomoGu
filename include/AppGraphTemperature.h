@@ -34,7 +34,7 @@ public:
 
     void Loop();
 
-    void OnMessageReceived();
+    void OnMessageReceived(KnxMessage &message);
 
 private:
     const KnxManager* m_knx;

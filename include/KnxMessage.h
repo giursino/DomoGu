@@ -30,17 +30,12 @@ DEALINGS IN THE SOFTWARE.
 class KnxAddr
 {
 public:
-    KnxAddr(const int hex_addr)
-    {
-        m_addr = hex_addr;
-    }
+    KnxAddr(const int hex_addr): m_addr(hex_addr) {}
 
-    KnxAddr(const int main, const int sub, const int line)
-    {
-        m_addr = ((main & 0x0F)<< (8+4)) +
-                 ((sub & 0x0F) << (8)) +
-                 (line & 0xFF);
-    }
+    KnxAddr(const int main, const int sub, const int line):
+        m_addr (((main & 0x0F)<< (8+4)) +
+               ((sub & 0x0F) << (8)) +
+               (line & 0xFF)) {}
 
     void set_value(int hex_addr) {m_addr = hex_addr;}
 
@@ -58,6 +53,7 @@ private:
 class KnxMessage
 {
 public:
+    KnxMessage();
     KnxMessage(const std::vector<std::uint8_t> message);
 
     bool set_raw(const std::vector<std::uint8_t> message);

@@ -43,7 +43,7 @@ void AppGraphTemperature::Loop()
 
 }
 
-void AppGraphTemperature::OnMessageReceived()
+void AppGraphTemperature::OnMessageReceived(KnxMessage &message)
 {
-    FILE_LOG(logINFO) << "Received message";
+    FILE_LOG(logINFO) << "Received message: " << message.get_string();
 }

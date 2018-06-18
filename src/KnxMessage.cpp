@@ -24,9 +24,16 @@ DEALINGS IN THE SOFTWARE.
 #include <sstream>
 #include <iomanip>
 
-KnxMessage::KnxMessage(const std::vector<uint8_t> message)
+KnxMessage::KnxMessage():
+    m_message({0})
 {
-    KnxMessage::m_message = message;
+
+}
+
+KnxMessage::KnxMessage(const std::vector<uint8_t> message):
+    m_message(message)
+{
+
 }
 
 bool KnxMessage::set_raw(const std::vector<std::uint8_t> message)

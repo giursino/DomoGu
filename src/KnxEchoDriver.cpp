@@ -33,17 +33,26 @@ KnxEchoDriver::KnxEchoDriver():
 
 }
 
+bool KnxEchoDriver::init()
+{
+    FILE_LOG(logINFO) << "Init KNX Echo Driver";
+}
+
+bool KnxEchoDriver::deinit()
+{
+    FILE_LOG(logINFO) << "Deinit KNX Echo Driver";
+}
+
 bool KnxEchoDriver::read(KnxMessage &message)
 {
     // TODO: no thread safe
-    if (m_is_there_data_to_read) {
-        m_is_there_data_to_read = false;
-        message = m_buffer;
-        return true;
-    }
-    else {
-        return false;
-    }
+    // TODO: use condition variable
+    while (!m_is_there_data_to_read) {}
+
+    m_is_there_data_to_read = false;
+    message = m_buffer;
+    FILE_LOG(logINFO) << "Reading: " << message.get_string();
+    return true;
 }
 
 bool KnxEchoDriver::write(const KnxMessage &message)

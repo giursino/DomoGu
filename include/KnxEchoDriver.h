@@ -31,6 +31,9 @@ class KnxEchoDriver : public KnxDriver
 public:
     KnxEchoDriver();
 
+    bool init();
+    bool deinit();
+
     bool read(KnxMessage &message);
     bool write(const KnxMessage &message);
 

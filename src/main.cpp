@@ -50,5 +50,9 @@ int main()
 
     appTemperature1->Loop();
 
+    delete appTemperature1;
+    delete appTemperature2;
+    delete knxManager;
+
     return 0;
 }
