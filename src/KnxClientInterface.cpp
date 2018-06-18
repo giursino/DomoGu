@@ -20,18 +20,9 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef KNXTINYSERIAL_H
-#define KNXTINYSERIAL_H
+#include "KnxClientInterface.h"
 
-#include "knxdriver.h"
-
-class KnxTinySerial : public KnxDriver
+KnxClientInterface::KnxClientInterface()
 {
-public:
-    KnxTinySerial();
 
-    bool read(KnxMessage &message);
-    bool write(const KnxMessage &message);
-};
-
-#endif // KNXTINYSERIAL_H
+}

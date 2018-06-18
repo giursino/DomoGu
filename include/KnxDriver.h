@@ -20,24 +20,31 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef APPGRAPHTEMPERATURE_H
-#define APPGRAPHTEMPERATURE_H
+#ifndef KNXDRIVER_H
+#define KNXDRIVER_H
 
-#include "knxclientinterface.h"
-#include "knxmanager.h"
+#include "KnxMessage.h"
 
-class AppGraphTemperature : public KnxClientInterface
+
+class KnxDriver
 {
 public:
-    AppGraphTemperature(const KnxManager *knx);
-    ~AppGraphTemperature();
 
-    void Loop();
+    typedef enum {
+        FAKE_DRIVER,
+        VIMAR_01847,
+        KNX_TINY_SERIAL
 
-    void OnMessageReceived();
+    } DriverType;
 
-private:
-    const KnxManager* m_knx;
+    static KnxDriver* create_knx_driver(DriverType type);
+
+    bool init();
+    bool deinit();
+
+    virtual bool read(KnxMessage &message) = 0;
+    virtual bool write(const KnxMessage &message) = 0;
+
 };
 
-#endif // APPGRAPHTEMPERATURE_H
+#endif // KNXDRIVER_H

@@ -20,8 +20,8 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include "knxmanager.h"
-#include "log.h"
+#include "KnxManager.h"
+#include "Log.h"
 
 using namespace log;
 

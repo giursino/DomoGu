@@ -20,27 +20,32 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include "knxfakedriver.h"
-#include "log.h"
+#include "KnxMessage.h"
+#include <sstream>
+#include <iomanip>
 
-using namespace log;
-
-KnxFakeDriver::KnxFakeDriver()
+KnxMessage::KnxMessage(const std::vector<uint8_t> message)
 {
-    //m_buffer = KnxMessage({0xDE, 0xAD, 0xBE, 0xEF});
+    KnxMessage::m_message = message;
 }
 
-bool KnxFakeDriver::read(KnxMessage &message)
+bool KnxMessage::set_raw(const std::vector<std::uint8_t> message)
 {
-    FILE_LOG(logWARNING) << "Fake method";
-    //message = m_buffer;
+    KnxMessage::m_message = message;
     return true;
 }
 
-bool KnxFakeDriver::write(const KnxMessage &message)
+bool KnxMessage::get_raw(std::vector<uint8_t> &message)
 {
-    FILE_LOG(logWARNING) << "Fake method";
-    FILE_LOG(logWARNING) << "Writing to internal buffer: " << message.get_string();
-    //m_buffer = message;
+    message = KnxMessage::m_message;
     return true;
+}
+
+std::string KnxMessage::get_string() const
+{
+    std::stringstream ssMessage;
+    for (auto byte=m_message.begin(); byte!=m_message.end(); byte++) {
+        ssMessage << "0x" << std::hex << *byte << " ";
+    }
+    return ssMessage.str();
 }

@@ -20,30 +20,33 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include "appgraphtemperature.h"
-#include "log.h"
+#include "KnxDriver.h"
+#include "KnxTinySerial.h"
+#include "KnxFakeDriver.h"
+#include "Log.h"
 
 using namespace log;
 
-AppGraphTemperature::AppGraphTemperature(const KnxManager *knx)
+KnxDriver* KnxDriver::create_knx_driver(KnxDriver::DriverType interface)
 {
-    FILE_LOG(logINFO) << "AppGraphTemperature loaded";
-    m_knx = knx;
+    if (interface == KnxDriver::KNX_TINY_SERIAL) {
+        return new KnxTinySerial();
+    }
+    if (interface == KnxDriver::FAKE_DRIVER) {
+        return new KnxFakeDriver();
+    }
+    else {
+        FILE_LOG(logERROR) << "Driver not implemented";
+        return new KnxFakeDriver();
+    }
 }
 
-AppGraphTemperature::~AppGraphTemperature()
+bool KnxDriver::init()
 {
-    FILE_LOG(logINFO) << "AppGraphTemperature unloaded";
+    FILE_LOG(logINFO) << "Base init function";
 }
 
-void AppGraphTemperature::Loop()
+bool KnxDriver::deinit()
 {
-    KnxMessage msg({0x11, 0x22, 0x33});
-    m_knx->SendMessage(msg);
-
-}
-
-void AppGraphTemperature::OnMessageReceived()
-{
-    FILE_LOG(logINFO) << "Received message";
+    FILE_LOG(logINFO) << "Base deinit function";
 }

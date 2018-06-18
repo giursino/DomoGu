@@ -20,9 +20,9 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include "knxmanager.h"
-#include "appgraphtemperature.h"
-#include "log.h"
+#include "KnxManager.h"
+#include "AppGraphTemperature.h"
+#include "Log.h"
 #include <iostream>
 
 using namespace std;

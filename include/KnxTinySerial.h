@@ -20,31 +20,18 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef KNXMANAGER_H
-#define KNXMANAGER_H
+#ifndef KNXTINYSERIAL_H
+#define KNXTINYSERIAL_H
 
-#include "knxdriver.h"
-#include "knxmessage.h"
-#include "knxclientinterface.h"
-#include <set>
+#include "KnxDriver.h"
 
-class KnxManager
+class KnxTinySerial : public KnxDriver
 {
 public:
-    KnxManager(KnxDriver::DriverType driver);
-    ~KnxManager();
+    KnxTinySerial();
 
-    void Loop();
-
-    bool Register(KnxClientInterface *client);
-
-    bool Deregister(KnxClientInterface *client);
-
-    bool SendMessage(const KnxMessage &message) const;
-
-private:
-    KnxDriver* m_driver;
-    std::set<KnxClientInterface *> m_clients;
+    bool read(KnxMessage &message);
+    bool write(const KnxMessage &message);
 };
 
-#endif // KNXMANAGER_H
+#endif // KNXTINYSERIAL_H

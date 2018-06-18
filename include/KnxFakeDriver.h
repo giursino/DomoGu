@@ -20,31 +20,23 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef KNXDRIVER_H
-#define KNXDRIVER_H
+#ifndef KNXFAKEDRIVER_H
+#define KNXFAKEDRIVER_H
 
-#include "knxmessage.h"
+#include "KnxDriver.h"
 
+class KnxMessage;
 
-class KnxDriver
+class KnxFakeDriver : public KnxDriver
 {
 public:
+    KnxFakeDriver();
 
-    typedef enum {
-        FAKE_DRIVER,
-        VIMAR_01847,
-        KNX_TINY_SERIAL
+    bool read(KnxMessage &message);
+    bool write(const KnxMessage &message);
 
-    } DriverType;
-
-    static KnxDriver* create_knx_driver(DriverType type);
-
-    bool init();
-    bool deinit();
-
-    virtual bool read(KnxMessage &message) = 0;
-    virtual bool write(const KnxMessage &message) = 0;
-
+private:
+    //KnxMessage m_buffer;
 };
 
-#endif // KNXDRIVER_H
+#endif // KNXFAKEDRIVER_H

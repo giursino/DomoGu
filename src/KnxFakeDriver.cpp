@@ -20,23 +20,27 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef KNXFAKEDRIVER_H
-#define KNXFAKEDRIVER_H
+#include "KnxFakeDriver.h"
+#include "Log.h"
 
-#include "knxdriver.h"
+using namespace log;
 
-class KnxMessage;
-
-class KnxFakeDriver : public KnxDriver
+KnxFakeDriver::KnxFakeDriver()
 {
-public:
-    KnxFakeDriver();
+    //m_buffer = KnxMessage({0xDE, 0xAD, 0xBE, 0xEF});
+}
 
-    bool read(KnxMessage &message);
-    bool write(const KnxMessage &message);
+bool KnxFakeDriver::read(KnxMessage &message)
+{
+    FILE_LOG(logWARNING) << "Fake method";
+    //message = m_buffer;
+    return true;
+}
 
-private:
-    //KnxMessage m_buffer;
-};
-
-#endif // KNXFAKEDRIVER_H
+bool KnxFakeDriver::write(const KnxMessage &message)
+{
+    FILE_LOG(logWARNING) << "Fake method";
+    FILE_LOG(logWARNING) << "Writing to internal buffer: " << message.get_string();
+    //m_buffer = message;
+    return true;
+}
