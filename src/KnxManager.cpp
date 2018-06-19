@@ -30,7 +30,7 @@ KnxManager::KnxManager(KnxDriver::DriverType driver)
     m_driver = KnxDriver::create_knx_driver(driver);
     m_driver->init();
 
-    m_rx_thread(KnxManager::Loop);
+    m_rx_thread = std::thread([this] { Loop(); });
 
 }
 
@@ -48,6 +48,7 @@ KnxManager::~KnxManager()
 
 void KnxManager::Loop()
 {
+  while(true) {
     KnxMessage message;
 
     m_driver->read(message);
@@ -56,7 +57,7 @@ void KnxManager::Loop()
     for (std::set<KnxClientInterface *>::iterator it=m_clients.begin(); it!=m_clients.end(); ++it) {
         (*it)->OnMessageReceived(message);
     }
-
+  }
 }
 
 bool KnxManager::Register(KnxClientInterface *client)

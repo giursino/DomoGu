@@ -35,7 +35,7 @@ public:
     KnxManager(KnxDriver::DriverType driver);
     ~KnxManager();
 
-    static void Loop();
+    void Loop();
 
     bool Register(KnxClientInterface *client);
 
