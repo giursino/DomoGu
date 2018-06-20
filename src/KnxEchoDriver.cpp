@@ -28,7 +28,7 @@ using namespace log;
 
 KnxEchoDriver::KnxEchoDriver():
     m_buffer({0xDE, 0xAD, 0xBE, 0xEF}),
-    m_is_there_data_to_read(true)
+    m_data_ready(true)
 {
 
 }
@@ -45,24 +45,40 @@ bool KnxEchoDriver::deinit()
 
 bool KnxEchoDriver::read(KnxMessage &message)
 {
-    // TODO: no thread safe
-    // TODO: use condition variable
-    while (!m_is_there_data_to_read) {}
+    std::unique_lock<std::mutex> lk_data_ready(m_data_ready_mutex);
+    m_data_ready_cv.wait(lk_data_ready, []{return m_data_ready;});
+//    m_data_ready_cv.wait(lk_data_ready);
 
-    m_is_there_data_to_read = false;
-    message = m_buffer;
+    {
+      std::lock_guard<std::mutex> guard(m_data_ready_mutex);
+      m_data_ready = false;
+    }
+
+    {
+      std::lock_guard<std::mutex> guard(m_buffer_mutex);
+      message = m_buffer;
+    }
+
     FILE_LOG(logINFO) << "Reading: " << message.get_string();
     return true;
 }
 
 bool KnxEchoDriver::write(const KnxMessage &message)
 {
-    if (m_is_there_data_to_read) {
+    if (m_data_ready) {
         FILE_LOG(logWARNING) << "Losing previous data: " << m_buffer.get_string();
     }
+
     FILE_LOG(logINFO) << "Writing: " << message.get_string();
-    std::lock_guard<std::mutex> guard(m_buffer_mutex);
-    m_buffer = message;
-    m_is_there_data_to_read = true;
+    {
+      std::lock_guard<std::mutex> guard(m_buffer_mutex);
+      m_buffer = message;
+    }
+
+    {
+      std::lock_guard<std::mutex> guard(m_data_ready_mutex);
+      m_data_ready = true;
+    }
+
     return true;
 }

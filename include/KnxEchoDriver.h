@@ -25,6 +25,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "KnxDriver.h"
 #include <mutex>
+#include <condition_variable>
 
 class KnxEchoDriver : public KnxDriver
 {
@@ -40,7 +41,11 @@ public:
 private:
     std::mutex m_buffer_mutex;
     KnxMessage m_buffer;
-    bool m_is_there_data_to_read;
+
+    std::mutex m_data_ready_mutex;
+    std::condition_variable m_data_ready_cv;
+    bool m_data_ready;
+
 };
 
 #endif // KNXECHODRIVER_H
