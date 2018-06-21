@@ -54,13 +54,13 @@ void KnxManager::Loop()
     m_driver->read(message);
     FILE_LOG(logDEBUG) << "Received message: " << message.get_string();
 
-    for (std::set<KnxClientInterface *>::iterator it=m_clients.begin(); it!=m_clients.end(); ++it) {
+    for (auto it=m_clients.begin(); it!=m_clients.end(); ++it) {
         (*it)->OnMessageReceived(message);
     }
   }
 }
 
-bool KnxManager::Register(KnxClientInterface *client)
+bool KnxManager::Register(const KnxClientInterface *client)
 {
     if (KnxManager::m_clients.insert(client).second) {
         FILE_LOG(logDEBUG) << "Client registered";
@@ -72,7 +72,7 @@ bool KnxManager::Register(KnxClientInterface *client)
     }
 }
 
-bool KnxManager::Deregister(KnxClientInterface *client)
+bool KnxManager::Deregister(const KnxClientInterface *client)
 {
     if (KnxManager::m_clients.erase(client) == 1) {
         FILE_LOG(logDEBUG) << "Client deregistered";

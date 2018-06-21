@@ -37,15 +37,15 @@ public:
 
     void Loop();
 
-    bool Register(KnxClientInterface *client);
+    bool Register(const KnxClientInterface *client);
 
-    bool Deregister(KnxClientInterface *client);
+    bool Deregister(const KnxClientInterface *client);
 
     bool SendMessage(const KnxMessage &message) const;
 
 private:
     KnxDriver* m_driver;
-    std::set<KnxClientInterface *> m_clients;
+    std::set<const KnxClientInterface *> m_clients;
     std::thread m_rx_thread;
 };
 

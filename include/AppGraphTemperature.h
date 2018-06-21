@@ -30,15 +30,15 @@ DEALINGS IN THE SOFTWARE.
 class AppGraphTemperature : public KnxClientInterface
 {
 public:
-    AppGraphTemperature(const KnxManager *knx);
+    AppGraphTemperature(KnxManager *knx);
     ~AppGraphTemperature();
 
     void Loop();
 
-    void OnMessageReceived(KnxMessage &message);
+    void OnMessageReceived(KnxMessage &message) const;
 
 private:
-    const KnxManager* m_knx;
+    KnxManager* m_knx;
     std::thread m_thread;
 };
 

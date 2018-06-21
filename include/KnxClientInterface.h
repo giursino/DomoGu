@@ -30,7 +30,7 @@ class KnxClientInterface
 public:
     KnxClientInterface();
 
-    virtual void OnMessageReceived(KnxMessage &message) = 0;
+    virtual void OnMessageReceived(KnxMessage &message) const = 0;
 };
 
 #endif // KNXCLIENTINTERFACE_H
