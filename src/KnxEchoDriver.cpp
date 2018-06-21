@@ -27,8 +27,7 @@ DEALINGS IN THE SOFTWARE.
 using namespace log;
 
 KnxEchoDriver::KnxEchoDriver():
-    m_buffer({0xDE, 0xAD, 0xBE, 0xEF}),
-    m_data_ready(true)
+    m_buffer()
 {
 
 }
@@ -45,40 +44,35 @@ bool KnxEchoDriver::deinit()
 
 bool KnxEchoDriver::read(KnxMessage &message)
 {
-    std::unique_lock<std::mutex> lk_data_ready(m_data_ready_mutex);
-    m_data_ready_cv.wait(lk_data_ready, []{return m_data_ready;});
-//    m_data_ready_cv.wait(lk_data_ready);
+    FILE_LOG(logINFO) << "Waiting for reading...";
 
-    {
-      std::lock_guard<std::mutex> guard(m_data_ready_mutex);
-      m_data_ready = false;
-    }
+    std::unique_lock<std::mutex> lock(m_lock);
+    m_not_empty.wait(lock, [this]{return !m_buffer.empty();});
 
-    {
-      std::lock_guard<std::mutex> guard(m_buffer_mutex);
-      message = m_buffer;
-    }
+    message = m_buffer.front();
+    m_buffer.pop();
 
-    FILE_LOG(logINFO) << "Reading: " << message.get_string();
+    FILE_LOG(logINFO) << "Read: " << message.get_string();
+
+    lock.unlock();
+    m_not_full.notify_one();
+
     return true;
 }
 
 bool KnxEchoDriver::write(const KnxMessage &message)
 {
-    if (m_data_ready) {
-        FILE_LOG(logWARNING) << "Losing previous data: " << m_buffer.get_string();
-    }
+    FILE_LOG(logINFO) << "Waiting for writing...";
 
-    FILE_LOG(logINFO) << "Writing: " << message.get_string();
-    {
-      std::lock_guard<std::mutex> guard(m_buffer_mutex);
-      m_buffer = message;
-    }
+    std::unique_lock<std::mutex> lock(m_lock);
+    m_not_full.wait(lock, [this]{return true;});
 
-    {
-      std::lock_guard<std::mutex> guard(m_data_ready_mutex);
-      m_data_ready = true;
-    }
+    m_buffer.push(message);
+
+    FILE_LOG(logINFO) << "Written: " << message.get_string();
+
+    lock.unlock();
+    m_not_empty.notify_one();
 
     return true;
 }

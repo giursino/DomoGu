@@ -41,7 +41,6 @@ int main()
     knxManager->Register(appTemperature1);
     knxManager->Register(appTemperature2);
 
-    knxManager->Loop();
     knxManager->Register(appTemperature1);
     knxManager->Deregister(appTemperature2);
 

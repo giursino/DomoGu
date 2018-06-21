@@ -30,7 +30,7 @@ KnxManager::KnxManager(KnxDriver::DriverType driver)
     m_driver = KnxDriver::create_knx_driver(driver);
     m_driver->init();
 
-    m_rx_thread = std::thread([this] { Loop(); });
+    m_rx_thread = std::thread([this] {Loop();});
 
 }
 

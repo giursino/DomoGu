@@ -25,6 +25,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "KnxClientInterface.h"
 #include "KnxManager.h"
+#include <thread>
 
 class AppGraphTemperature : public KnxClientInterface
 {
@@ -38,6 +39,7 @@ public:
 
 private:
     const KnxManager* m_knx;
+    std::thread m_thread;
 };
 
 #endif // APPGRAPHTEMPERATURE_H

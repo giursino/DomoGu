@@ -26,6 +26,7 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxDriver.h"
 #include <mutex>
 #include <condition_variable>
+#include <queue>
 
 class KnxEchoDriver : public KnxDriver
 {
@@ -39,13 +40,12 @@ public:
     bool write(const KnxMessage &message);
 
 private:
-    std::mutex m_buffer_mutex;
-    KnxMessage m_buffer;
+    std::queue<KnxMessage> m_buffer;
 
-    std::mutex m_data_ready_mutex;
-    std::condition_variable m_data_ready_cv;
-    bool m_data_ready;
+    std::mutex m_lock;
 
+    std::condition_variable m_not_empty;
+    std::condition_variable m_not_full;
 };
 
 #endif // KNXECHODRIVER_H

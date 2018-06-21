@@ -21,26 +21,39 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include "AppGraphTemperature.h"
+
 #include "log.h"
+#include <chrono>
+#include <cstdint>
 
 using namespace log;
 
-AppGraphTemperature::AppGraphTemperature(const KnxManager *knx)
+AppGraphTemperature::AppGraphTemperature(const KnxManager *knx):
+    m_knx(knx)
 {
     FILE_LOG(logINFO) << "AppGraphTemperature loaded";
-    m_knx = knx;
+
+    m_thread = std::thread([this] {Loop();});
 }
 
 AppGraphTemperature::~AppGraphTemperature()
 {
     FILE_LOG(logINFO) << "AppGraphTemperature unloaded";
+    m_thread.join();
 }
 
 void AppGraphTemperature::Loop()
 {
-    KnxMessage msg({0x11, 0x22, 0x33});
-    m_knx->SendMessage(msg);
+    uint8_t count=0;
+    FILE_LOG(logINFO) << "Starting loop...";
 
+    while(true) {
+        count++;
+        KnxMessage msg({0xAA, 0xBB, count});
+        m_knx->SendMessage(msg);
+
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+    }
 }
 
 void AppGraphTemperature::OnMessageReceived(KnxMessage &message)
