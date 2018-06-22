@@ -27,7 +27,6 @@ DEALINGS IN THE SOFTWARE.
 KnxMessage::KnxMessage():
     m_message({0})
 {
-
 }
 
 KnxMessage::KnxMessage(const std::vector<uint8_t> message):
@@ -51,8 +50,8 @@ bool KnxMessage::get_raw(std::vector<uint8_t> &message)
 std::string KnxMessage::get_string() const
 {
     std::stringstream ssMessage;
-    for (auto byte=m_message.begin(); byte!=m_message.end(); byte++) {
-        ssMessage << "0x" << std::hex << *byte << " ";
+    for (uint8_t byte : m_message) {
+        ssMessage << "0x" << std::setw(2) << std::setfill('0') << std::hex << int(byte) << " ";
     }
     return ssMessage.str();
 }
