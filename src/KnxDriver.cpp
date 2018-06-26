@@ -45,9 +45,11 @@ KnxDriver* KnxDriver::create_knx_driver(KnxDriver::DriverType interface)
 bool KnxDriver::init()
 {
     FILE_LOG(logINFO) << "Base init function";
+    return true;
 }
 
 bool KnxDriver::deinit()
 {
     FILE_LOG(logINFO) << "Base deinit function";
+    return true;
 }

@@ -35,11 +35,13 @@ KnxEchoDriver::KnxEchoDriver():
 bool KnxEchoDriver::init()
 {
     FILE_LOG(logINFO) << "Init KNX Echo Driver";
+    return true;
 }
 
 bool KnxEchoDriver::deinit()
 {
     FILE_LOG(logINFO) << "Deinit KNX Echo Driver";
+    return true;
 }
 
 bool KnxEchoDriver::read(KnxMessage &message)

@@ -29,10 +29,10 @@ KnxTinySerial::KnxTinySerial()
 
 bool KnxTinySerial::read(KnxMessage &message)
 {
-
+    return false;
 }
 
 bool KnxTinySerial::write(const KnxMessage &message)
 {
-
+    return false;
 }

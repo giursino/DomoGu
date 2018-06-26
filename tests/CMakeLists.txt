@@ -1,6 +1,6 @@
 enable_testing()
 
-# Look for installed version of CppUTest
+# look for installed version of CppUTest
 if(DEFINED ENV{CPPUTEST_HOME})
     message(STATUS "Using CppUTest home: $ENV{CPPUTEST_HOME}")
     set(CPPUTEST_INCLUDE_DIRS $ENV{CPPUTEST_HOME}/include)

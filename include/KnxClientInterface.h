@@ -29,6 +29,7 @@ class KnxClientInterface
 {
 public:
     KnxClientInterface();
+    virtual ~KnxClientInterface() {;}
 
     virtual void OnMessageReceived(KnxMessage &message) const = 0;
 };

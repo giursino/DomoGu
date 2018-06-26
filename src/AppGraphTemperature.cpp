@@ -45,7 +45,6 @@ AppGraphTemperature::~AppGraphTemperature()
 
 void AppGraphTemperature::Loop()
 {
-    uint8_t count=0;
     FILE_LOG(logINFO) << "Registering...";
     m_knx->Register(this);
 

@@ -30,6 +30,8 @@ class KnxDriver
 {
 public:
 
+    virtual ~KnxDriver() {;}
+
     typedef enum {
         FAKE_DRIVER,
         ECHO_DRIVER,
