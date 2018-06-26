@@ -1,0 +1,14 @@
+dist: trusty
+sudo: false
+
+language: cpp
+compiler: gcc
+
+
+# Build steps
+script:
+  - mkdir build
+  - cd build
+  - cmake -DENABLE_TEST=ON ..
+  - make
+  - make test
