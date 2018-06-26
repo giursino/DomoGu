@@ -38,9 +38,9 @@ AppGraphTemperature::AppGraphTemperature(KnxManager *knx):
 
 AppGraphTemperature::~AppGraphTemperature()
 {
+    m_thread.join();
     m_knx->Deregister(this);
     FILE_LOG(logINFO) << "AppGraphTemperature unloaded";
-    m_thread.join();
 }
 
 void AppGraphTemperature::Loop()
@@ -51,11 +51,7 @@ void AppGraphTemperature::Loop()
 
     FILE_LOG(logINFO) << "Starting loop...";
     while(true) {
-        count++;
-        KnxMessage msg({0xAA, 0xBB, count});
-        m_knx->SendMessage(msg);
-
-        std::this_thread::sleep_for(std::chrono::seconds(3));
+        std::this_thread::sleep_for(std::chrono::seconds(10));
     }
 }
 

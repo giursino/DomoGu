@@ -20,28 +20,46 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include "KnxManager.h"
-#include "AppGraphTemperature.h"
 #include "AppTest.h"
-#include "log.h"
-#include <iostream>
 
-using namespace std;
+#include "log.h"
+#include <chrono>
+#include <cstdint>
+
 using namespace log;
 
-int main()
+AppTest::AppTest(KnxManager *knx):
+  m_knx(knx)
 {
-    FILELog::ReportingLevel() = logTRACE;
+  FILE_LOG(logINFO) << "AppTest loaded";
 
-    FILE_LOG(logDEBUG) << "Starting DomoGu...";
+  m_thread = std::thread([this] {Loop();});
+}
 
-    KnxManager *knxManager = new KnxManager(KnxDriver::ECHO_DRIVER);
-    AppGraphTemperature* appTemperature = new AppGraphTemperature(knxManager);
-    AppTest* appTest = new AppTest(knxManager);
+AppTest::~AppTest()
+{
+    m_thread.join();
+    m_knx->Deregister(this);
+    FILE_LOG(logINFO) << "AppTest unloaded";
+}
 
-    delete appTemperature;
-    delete appTest;
-    delete knxManager;
+void AppTest::Loop()
+{
+    uint8_t count=0;
+    FILE_LOG(logINFO) << "Registering...";
+    m_knx->Register(this);
 
-    return 0;
+    FILE_LOG(logINFO) << "Starting loop...";
+    while(true) {
+        count++;
+        KnxMessage msg({0xAA, 0xBB, count});
+        m_knx->SendMessage(msg);
+
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+    }
+}
+
+void AppTest::OnMessageReceived(KnxMessage &message) const
+{
+    FILE_LOG(logINFO) << "Nothing to do!";
 }
