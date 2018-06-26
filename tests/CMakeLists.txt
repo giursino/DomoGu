@@ -8,7 +8,7 @@ if(DEFINED ENV{CPPUTEST_HOME})
     set(CPPUTEST_LDFLAGS CppUTest CppUTestExt)
 else()
     find_package(PkgConfig REQUIRED)
-    pkg_search_module(CPPUTEST REQUIRED cpputest>=3.7)
+    pkg_search_module(CPPUTEST REQUIRED cpputest>=3.4)
     message(STATUS "Found CppUTest version ${CPPUTEST_VERSION}")
 endif()
 
