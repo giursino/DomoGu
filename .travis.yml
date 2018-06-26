@@ -4,23 +4,17 @@ sudo: false
 language: cpp
 compiler: gcc
 
-#before_script:
-  #- git clone https://github.com/cpputest/cpputest.git
-  #- cd cpputest
-  #- git checkout v3.8
-  #- cmake CMakeLists.txt
-  #- make
-
-addons:
-  apt:
-    packages:
-    - cpputest
+before_script:
+  - wget https://github.com/cpputest/cpputest/releases/download/v3.8/cpputest-3.8.tar.gz -O /tmp/cpputest.tar.gz
+  - tar -xzvf /tmp/cpputest.tar.gz -C /tmp
+  - cd /tmp/cpputest-* && ./configure --prefix=/tmp/cpputest-build && make && make install && cd -
+  - ls /tmp/cpputest-build
 
 
 # Build steps
 script:
   - mkdir build
   - cd build
-  - cmake -DENABLE_TEST=ON ..
+  - cmake -DENABLE_TEST=ON -DCPPUTEST_HOME=/tmp/cpputest-build ..
   - make
   - make test
