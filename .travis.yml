@@ -4,6 +4,18 @@ sudo: false
 language: cpp
 compiler: gcc
 
+#before_script:
+  #- git clone https://github.com/cpputest/cpputest.git
+  #- cd cpputest
+  #- git checkout v3.8
+  #- cmake CMakeLists.txt
+  #- make
+
+addons:
+  apt:
+    packages:
+    - cpputest
+
 
 # Build steps
 script:
