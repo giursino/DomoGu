@@ -15,8 +15,16 @@ endif()
 
 set(TARGET_NAME DomoGu-test)
 
+file(GLOB_RECURSE TEST_SOURCES *.cpp)
+file(GLOB_RECURSE APP_SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE APP_HEADERS ${CMAKE_SOURCE_DIR}/include/*.h)
+
+list(REMOVE_ITEM APP_SOURCES ${CMAKE_SOURCE_DIR}/src/main.cpp)
+
 add_executable(${TARGET_NAME}
-  main.cpp
+    ${TEST_SOURCES}
+    ${APP_SOURCES}
+    ${APP_HEADERS}
 )
 
 include_directories(
