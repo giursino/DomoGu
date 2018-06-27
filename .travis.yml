@@ -15,8 +15,6 @@ before_script:
 script:
   - mkdir build
   - cd build
-  - ls /tmp/cpputest-build
-  - ls $CPPUTEST_HOME/lib
   - cmake -DENABLE_TEST=ON ..
   - make
-  - make test
+  - ctest

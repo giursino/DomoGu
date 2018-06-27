@@ -1,5 +1,3 @@
-enable_testing()
-
 # look for installed version of CppUTest
 if(DEFINED ENV{CPPUTEST_HOME})
     message(STATUS "Using CppUTest home: $ENV{CPPUTEST_HOME}")
