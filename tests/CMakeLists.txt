@@ -21,12 +21,6 @@ file(GLOB_RECURSE APP_HEADERS ${CMAKE_SOURCE_DIR}/include/*.h)
 
 list(REMOVE_ITEM APP_SOURCES ${CMAKE_SOURCE_DIR}/src/main.cpp)
 
-add_executable(${TARGET_NAME}
-    ${TEST_SOURCES}
-    ${APP_SOURCES}
-    ${APP_HEADERS}
-)
-
 include_directories(
     ${CPPUTEST_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/include
@@ -34,6 +28,12 @@ include_directories(
 
 link_directories(
     ${CPPUTEST_LIBRARIES}
+)
+
+add_executable(${TARGET_NAME}
+    ${TEST_SOURCES}
+    ${APP_SOURCES}
+    ${APP_HEADERS}
 )
 
 target_link_libraries(${TARGET_NAME}
