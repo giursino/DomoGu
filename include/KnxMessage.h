@@ -57,26 +57,26 @@ public:
     KnxMessage(const std::vector<std::uint8_t> message);
 
     bool set_raw(const std::vector<std::uint8_t> message);
-    bool get_raw(std::vector<std::uint8_t> &message);
+    bool get_raw(std::vector<std::uint8_t> &message) const;
 
     std::string get_string() const;
 
-    int get_src();
-    int get_dest();
-    int get_npci();
-    int get_npci_payload();
-    int get_tpci();
-    int get_tpci_payload();
-    int get_apci();
-    int get_apci_payload();
+    int get_src() const;
+    int get_dest() const;
+    int get_npci() const;
+    int get_npci_payload() const;
+    int get_tpci() const;
+    int get_tpci_payload() const;
+    int get_apci() const;
+    int get_apci_payload() const;
 
-    bool set_ctrl_field(std::uint8_t value);
-    bool set_src(KnxAddr addr);
-    bool set_dest(KnxAddr addr);
-    bool set_npci(std::uint8_t value);
-    bool set_tpci(std::uint8_t value);
-    bool set_apci(std::uint16_t value);
-    bool set_apci_payload(long long int value);
+    bool set_ctrl_field(const std::uint8_t value);
+    bool set_src(const KnxAddr addr);
+    bool set_dest(const KnxAddr addr);
+    bool set_npci(const std::uint8_t value);
+    bool set_tpci(const std::uint8_t value);
+    bool set_apci(const std::uint16_t value);
+    bool set_apci_payload(const long long int value);
 
 private:
     std::vector<std::uint8_t> m_message;

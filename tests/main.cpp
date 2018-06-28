@@ -20,7 +20,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include "CppUTest/CommandLineTestRunner.h"
+#include <CppUTest/CommandLineTestRunner.h>
 
 int main(int ac, char **av)
 {
@@ -28,5 +28,6 @@ int main(int ac, char **av)
     CHECK(true);
     LONGS_EQUAL(1, 1);
 
-    return CommandLineTestRunner::RunAllTests(ac, av); /* cover alternate method */
+    /* run all tests */
+    return CommandLineTestRunner::RunAllTests(ac, av);
 }
