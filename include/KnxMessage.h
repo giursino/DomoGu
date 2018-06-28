@@ -30,6 +30,8 @@ DEALINGS IN THE SOFTWARE.
 class KnxAddr
 {
 public:
+    KnxAddr(): m_addr(0) {}
+
     KnxAddr(const int hex_addr): m_addr(hex_addr) {}
 
     KnxAddr(const int main, const int sub, const int line):
@@ -61,8 +63,8 @@ public:
 
     std::string get_string() const;
 
-    int get_src() const;
-    int get_dest() const;
+    int get_src(KnxAddr &addr) const;
+    int get_dest(KnxAddr &addr) const;
     int get_npci() const;
     int get_npci_payload() const;
     int get_tpci() const;
@@ -71,8 +73,8 @@ public:
     int get_apci_payload() const;
 
     bool set_ctrl_field(const std::uint8_t value);
-    bool set_src(const KnxAddr addr);
-    bool set_dest(const KnxAddr addr);
+    bool set_src(const KnxAddr &addr);
+    bool set_dest(const KnxAddr &addr);
     bool set_npci(const std::uint8_t value);
     bool set_tpci(const std::uint8_t value);
     bool set_apci(const std::uint16_t value);

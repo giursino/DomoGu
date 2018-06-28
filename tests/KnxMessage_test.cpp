@@ -34,6 +34,33 @@ TEST_GROUP(KnxMessage)
     }
 };
 
+
+TEST(KnxMessage, addr)
+{
+    KnxAddr in(0x110F);
+    CHECK(in.get_value()==0x110F);
+
+    in.set_value(0xAABB);
+    CHECK(in.get_value()==0xAABB);
+
+    in.set_value(10);
+    CHECK(in.get_value()==0x000A);
+
+    in.set_value(0x1508);
+    CHECK(in.get_main()==1);
+    CHECK(in.get_sub()==5);
+    CHECK(in.get_line()==8);
+
+    KnxAddr knxaddr(1,5,10);
+    CHECK(knxaddr.get_value()==0x150A);
+    CHECK(knxaddr.get_main()==1);
+    CHECK(knxaddr.get_sub()==5);
+    CHECK(knxaddr.get_line()==10);
+    CHECK(knxaddr.get_line()==0x0A);
+}
+
+
+
 TEST(KnxMessage, get_string_empty)
 {
     KnxMessage in;
@@ -99,4 +126,23 @@ TEST(KnxMessage, set_raw)
     CHECK(out[1]==0x22);
     CHECK(out[2]==0x33);
     CHECK(out[3]==0x44);
+}
+
+IGNORE_TEST(KnxMessage, get_src)
+{
+    KnxMessage in({0xBC, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+    KnxAddr out;
+
+//    CHECK(in.get_src(out));
+//    CHECK(out.get_value()==0x110F);
+}
+
+IGNORE_TEST(KnxMessage, get_dest)
+{
+    KnxMessage in({0xBC, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+    KnxAddr out;
+
+//    CHECK(in.get_dest(out));
+//    CHECK(in.get_src(out));
+//    CHECK(out.get_value()==0x0DB9);
 }
