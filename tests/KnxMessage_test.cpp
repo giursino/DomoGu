@@ -128,21 +128,28 @@ TEST(KnxMessage, set_raw)
     CHECK(out[3]==0x44);
 }
 
-IGNORE_TEST(KnxMessage, get_src)
+TEST(KnxMessage, get_src)
 {
-    KnxMessage in({0xBC, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+    KnxMessage in;
     KnxAddr out;
 
-//    CHECK(in.get_src(out));
-//    CHECK(out.get_value()==0x110F);
+    CHECK(in.get_src(out)==false);
+
+    in.set_raw({0xBC, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+    CHECK(in.get_src(out));
+    CHECK(out.get_value()==0x110F);
 }
 
-IGNORE_TEST(KnxMessage, get_dest)
+TEST(KnxMessage, get_dest)
 {
-    KnxMessage in({0xBC, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+    KnxMessage in;
     KnxAddr out;
 
-//    CHECK(in.get_dest(out));
-//    CHECK(in.get_src(out));
-//    CHECK(out.get_value()==0x0DB9);
+    CHECK(in.get_dest(out)==false);
+
+    in.set_raw({0xBC, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+    CHECK(in.get_dest(out));
+    CHECK(out.get_value()==0x0DB9);
 }
+
+

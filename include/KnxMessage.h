@@ -51,6 +51,36 @@ private:
     std::uint16_t m_addr;
 };
 
+enum class Priority {
+    system,
+    urgent,
+    normal,
+    low
+};
+
+enum class FrameType {
+    L_Data_Standard,
+    L_Data_Extended,
+    L_Poll_Data,
+    ACK,
+    NAK,
+    BUSY,
+    NAK_and_BUSY
+};
+
+enum class TransportLayerServices {
+    T_Data_Broadcast,
+    T_Data_Group,
+    T_Data_Tag_Group,
+    T_Data_Individual,
+    T_Data_Connected,
+    T_Connect,
+    T_Disconnect,
+    T_ACK,
+    T_NAK,
+};
+
+
 
 class KnxMessage
 {
@@ -63,16 +93,21 @@ public:
 
     std::string get_string() const;
 
-    int get_src(KnxAddr &addr) const;
-    int get_dest(KnxAddr &addr) const;
-    int get_npci() const;
-    int get_npci_payload() const;
-    int get_tpci() const;
-    int get_tpci_payload() const;
-    int get_apci() const;
-    int get_apci_payload() const;
+    bool get_src(KnxAddr &addr) const;
+    bool get_dest(KnxAddr &addr) const;
 
-    bool set_ctrl_field(const std::uint8_t value);
+    bool get_frame_type(FrameType &value) const;
+    bool get_priority(Priority &value) const;
+    bool is_destination_broadcast_address() const;
+    bool is_destination_group_address() const;
+    bool get_hopcount(std::uint8_t &hopcount) const;
+    bool get_length(std::uint8_t &length) const;
+    bool get_transport_layer_services(TransportLayerServices &value) const;
+    bool get_transport_layer_sequence_num(std::uint8_t &value) const;
+    bool get_apci() const;
+    bool get_payload(std::vector<std::uint8_t> &payload) const;
+
+    bool set_control_field(const std::uint8_t value);
     bool set_src(const KnxAddr &addr);
     bool set_dest(const KnxAddr &addr);
     bool set_npci(const std::uint8_t value);
@@ -81,6 +116,8 @@ public:
     bool set_apci_payload(const long long int value);
 
 private:
+    bool is_message_valid() const;
+
     std::vector<std::uint8_t> m_message;
 
 };
