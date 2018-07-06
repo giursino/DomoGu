@@ -5,6 +5,9 @@ project(DomoGuProject)
 # add Test option
 option(ENABLE_TEST "Enable test" OFF)
 
+# add CppUTest local path
+set(CPPUTEST_PATH "" CACHE PATH "CppUTest local path")
+
 # enable support for c++11
 set (CMAKE_CXX_STANDARD 11)
 

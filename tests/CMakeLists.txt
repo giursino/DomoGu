@@ -1,13 +1,16 @@
 # look for installed version of CppUTest
-if(DEFINED ENV{CPPUTEST_HOME})
-    message(STATUS "Using CppUTest home: $ENV{CPPUTEST_HOME}")
-    set(CPPUTEST_INCLUDE_DIRS $ENV{CPPUTEST_HOME}/include)
-    set(CPPUTEST_LIBRARIES $ENV{CPPUTEST_HOME}/lib)
-    set(CPPUTEST_LDFLAGS CppUTest CppUTestExt)
-else()
+if("${CPPUTEST_PATH}" STREQUAL "")
     find_package(PkgConfig REQUIRED)
-    pkg_search_module(CPPUTEST REQUIRED cpputest>=3.4)
+    pkg_search_module(CPPUTEST REQUIRED cpputest>=3.7)
     message(STATUS "Found CppUTest version ${CPPUTEST_VERSION}")
+else()
+    if (NOT IS_DIRECTORY ${CPPUTEST_PATH})
+        message(FATAL_ERROR "invalid directory")
+    endif()
+    message(STATUS "Using CppUTest path: ${CPPUTEST_PATH}")
+    set(CPPUTEST_INCLUDE_DIRS ${CPPUTEST_PATH}/include)
+    set(CPPUTEST_LIBRARIES ${CPPUTEST_PATH}/lib)
+    set(CPPUTEST_LDFLAGS CppUTest CppUTestExt)
 endif()
 
 
