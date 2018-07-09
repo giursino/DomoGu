@@ -77,7 +77,77 @@ enum class TransportLayerServices {
     T_Connect,
     T_Disconnect,
     T_ACK,
-    T_NAK,
+    T_NAK
+};
+
+enum class ApplicationLayerServices {
+  A_GroupValue_Read,
+  A_GroupValue_Response,
+  A_GroupValue_Write,
+  A_IndividualAddress_Write,
+  A_IndividualAddress_Read,
+  A_IndividualAddress_Response,
+  A_ADC_Read,
+  A_ADC_Response,
+  A_SystemNetworkParameter_Read,
+  A_SystemNetworkParameter_Response,
+  A_SystemNetworkParameter_Write,
+  A_Memory_Read,
+  A_Memory_Response,
+  A_Memory_Write,
+  A_UserMemory_Read,
+  A_UserMemory_Response,
+  A_UserMemory_Write,
+  A_UserMemoryBit_Write,
+  A_UserManufacturerInfo_Read,
+  A_UserManufacturerInfo_Response,
+  A_FunctionPropertyCommand,
+  A_FunctionPropertyState_Read,
+  A_FunctionPropertyState_Response,
+  A_DeviceDescriptor_Read,
+  A_DeviceDescriptor_Response,
+  A_Restart,
+  A_Open_Routing_Table_Req,
+  A_Read_Routing_Table_Req,
+  A_Read_Routing_Table_Res,
+  A_Write_Routing_Table_Req,
+  A_Read_Router_Memory_Req,
+  A_Read_Router_Memory_Res,
+  A_Write_Router_Memory_Req,
+  A_Read_Router_Status_Req,
+  A_Read_Router_Status_Res,
+  A_Write_Router_Status_Req,
+  A_MemoryBit_Write,
+  A_Authorize_Request,
+  A_Authorize_Response,
+  A_Key_Write,
+  A_Key_Response,
+  A_PropertyValue_Read,
+  A_PropertyValue_Response,
+  A_PropertyValue_Write,
+  A_PropertyDescription_Read,
+  A_PropertyDescription_Response,
+  A_NetworkParameter_Read,
+  A_NetworkParameter_Response,
+  A_IndividualAddressSerialNumber_Read,
+  A_IndividualAddressSerialNumber_Response,
+  A_IndividualAddressSerialNumber_Write,
+  A_DomainAddress_Write,
+  A_DomainAddress_Read,
+  A_DomainAddress_Response,
+  A_DomainAddressSelective_Read,
+  A_NetworkParameter_Write,
+  A_Link_Read,
+  A_Link_Response,
+  A_Link_Write,
+  A_GroupPropValue_Read,
+  A_GroupPropValue_Response,
+  A_GroupPropValue_Write,
+  A_GroupPropValue_InfoReport,
+  A_DomainAddressSerialNumber_Read,
+  A_DomainAddressSerialNumber_Response,
+  A_DomainAddressSerialNumber_Write,
+  A_FileStream_InforReport
 };
 
 
@@ -104,7 +174,7 @@ public:
     bool get_length(std::uint8_t &length) const;
     bool get_transport_layer_services(TransportLayerServices &value) const;
     bool get_transport_layer_sequence_num(std::uint8_t &value) const;
-    bool get_apci() const;
+    bool get_apci(ApplicationLayerServices &value) const;
     bool get_payload(std::vector<std::uint8_t> &payload) const;
 
     bool set_control_field(const std::uint8_t value);
