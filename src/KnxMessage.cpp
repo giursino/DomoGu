@@ -417,17 +417,19 @@ bool KnxMessage::get_payload(std::vector<uint8_t>& payload) const
 
   switch (apci) {
   case ApplicationLayerServices::A_GroupValue_Write:
+  case ApplicationLayerServices::A_GroupValue_Response:
   {
     std::uint8_t len;
     if (!get_length(len)) {
       return false;
     }
+    payload.clear();
     if (len==1) {
-      payload.push_back(m_message[6] & 0x3F);
+      payload.push_back(m_message[7] & 0x3F);
     }
     else {
-      for(int i=0; i<len; i++) {
-        payload.push_back(m_message[7+i]);
+      for(int i=0; i<(len-1); i++) {
+        payload.push_back(m_message[8+i]);
       }
     }
     break;

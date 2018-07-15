@@ -248,34 +248,34 @@ TEST(KnxMessage, TP1_L2_frame)
 TEST(KnxMessage, TP1_L3_network)
 {
   KnxMessage in;
-  TransportLayerServices tpci;
+  TransportLayerServices tcf;
   std::uint8_t hopcount;
   std::uint8_t seqnum;
 
   CHECK(!in.get_hopcount(hopcount));
-  CHECK(!in.get_transport_layer_services(tpci));
+  CHECK(!in.get_transport_layer_services(tcf));
   CHECK(!in.get_transport_layer_sequence_num(seqnum));
 
   // T_Data_Group & check hopcount
   in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Data_Group);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Data_Group);
   CHECK(!in.get_transport_layer_sequence_num(seqnum));
 
   in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xF1, 0x00, 0x81});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==7);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Data_Group);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Data_Group);
   CHECK(!in.get_transport_layer_sequence_num(seqnum));
 
   in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0x81, 0x00, 0x81});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==0);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Data_Group);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Data_Group);
   CHECK(!in.get_transport_layer_sequence_num(seqnum));
 
 
@@ -283,8 +283,8 @@ TEST(KnxMessage, TP1_L3_network)
   in.set_raw({0xB0, 0xAF, 0xFE, 0x10, 0x01, 0x60, 0x80});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Connect);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Connect);
   CHECK(!in.get_transport_layer_sequence_num(seqnum));
 
 
@@ -292,8 +292,8 @@ TEST(KnxMessage, TP1_L3_network)
   in.set_raw({0xB0, 0xAF, 0xFE, 0x10, 0x01, 0x60, 0x81});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Disconnect);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Disconnect);
   CHECK(!in.get_transport_layer_sequence_num(seqnum));
 
 
@@ -301,8 +301,8 @@ TEST(KnxMessage, TP1_L3_network)
   in.set_raw({0xB8, 0x10, 0xAA, 0x10, 0x01, 0x69, 0x03, 0xD7, 0x01, 0xC9, 0x40, 0x01, 0x04, 0x00, 0x00, 0x00, 0xDC});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Data_Individual);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Data_Individual);
   CHECK(!in.get_transport_layer_sequence_num(seqnum));
 
 
@@ -310,8 +310,8 @@ TEST(KnxMessage, TP1_L3_network)
   in.set_raw({0xBC, 0x10, 0x37, 0x00, 0x00, 0xE2, 0x01, 0x81, 0x01});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Data_Broadcast);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Data_Broadcast);
   CHECK(!in.get_transport_layer_sequence_num(seqnum));
 
 
@@ -319,24 +319,24 @@ TEST(KnxMessage, TP1_L3_network)
   in.set_raw({0xBC, 0x10, 0x37, 0x12, 0x34, 0x65, 0x43, 0xD5, 0x04, 0x01, 0x10, 0x01});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Data_Connected);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Data_Connected);
   CHECK(in.get_transport_layer_sequence_num(seqnum));
   CHECK(seqnum==0);
 
   in.set_raw({0xBC, 0x10, 0x37, 0x12, 0x34, 0x65, 0x47, 0xD5, 0x04, 0x01, 0x10, 0x01});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Data_Connected);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Data_Connected);
   CHECK(in.get_transport_layer_sequence_num(seqnum));
   CHECK(seqnum==1);
 
   in.set_raw({0xBC, 0x10, 0x37, 0x12, 0x34, 0x65, 0x7F, 0xD5, 0x04, 0x01, 0x10, 0x01});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_Data_Connected);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_Data_Connected);
   CHECK(in.get_transport_layer_sequence_num(seqnum));
   CHECK(seqnum==15);
 
@@ -345,8 +345,8 @@ TEST(KnxMessage, TP1_L3_network)
   in.set_raw({0xBC, 0x10, 0x01, 0xAF, 0xFE, 0x60, 0xFE});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_ACK);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_ACK);
   CHECK(in.get_transport_layer_sequence_num(seqnum));
   CHECK(seqnum==0xF);
 
@@ -355,8 +355,85 @@ TEST(KnxMessage, TP1_L3_network)
   in.set_raw({0xB0, 0xA0, 0x01, 0xA0, 0x00, 0x60, 0xC3});
   CHECK(in.get_hopcount(hopcount));
   CHECK(hopcount==6);
-  CHECK(in.get_transport_layer_services(tpci));
-  CHECK(tpci==TransportLayerServices::T_NAK);
+  CHECK(in.get_transport_layer_services(tcf));
+  CHECK(tcf==TransportLayerServices::T_NAK);
   CHECK(in.get_transport_layer_sequence_num(seqnum));
   CHECK(seqnum==0);
+}
+
+TEST(KnxMessage, TP1_L7_application_group)
+{
+  KnxMessage in;
+  ApplicationLayerServices apci;
+  std::vector<std::uint8_t> payload;
+  std::vector<std::uint8_t> payload_expected;
+
+  CHECK(!in.get_apci(apci));
+  CHECK(!in.get_payload(payload));
+
+  // A_GroupValue_Write
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+  CHECK(in.get_apci(apci));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Write);
+  CHECK(in.get_payload(payload));
+  payload_expected={0x01};
+  CHECK(payload==payload_expected);
+
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x86});
+  CHECK(in.get_apci(apci));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Write);
+  CHECK(in.get_payload(payload));
+  payload_expected={0x06};
+  CHECK(payload==payload_expected);
+
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0xBF});
+  CHECK(in.get_apci(apci));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Write);
+  CHECK(in.get_payload(payload));
+  payload_expected={0x3F};
+  CHECK(payload==payload_expected);
+
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE2, 0x00, 0x80, 0x01});
+  CHECK(in.get_apci(apci));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Write);
+  CHECK(in.get_payload(payload));
+  payload_expected={0x01};
+  CHECK(payload==payload_expected);
+
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE4, 0x00, 0x80, 0x01, 0x02, 0x03});
+  CHECK(in.get_apci(apci));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Write);
+  CHECK(in.get_payload(payload));
+  payload_expected={0x01, 0x02, 0x03};
+  CHECK(payload==payload_expected);
+
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE4, 0x00, 0x8F, 0x01, 0x02, 0x03});
+  CHECK(in.get_apci(apci));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Write);
+  CHECK(in.get_payload(payload));
+  payload_expected={0x01, 0x02, 0x03};
+  CHECK(payload==payload_expected);
+
+
+  // A_GroupValue_Read
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x00});
+  CHECK(in.get_apci(apci));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Read);
+  CHECK(!in.get_payload(payload));
+
+
+  // A_GroupValue_Response
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x41});
+  CHECK(in.get_apci(apci));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Response);
+  CHECK(in.get_payload(payload));
+  payload_expected={0x01};
+  CHECK(payload==payload_expected);
+
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE2, 0x00, 0x40, 0x01});
+  CHECK(in.get_apci(apci));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Response);
+  CHECK(in.get_payload(payload));
+  payload_expected={0x01};
+  CHECK(payload==payload_expected);
 }
