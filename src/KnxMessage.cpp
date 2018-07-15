@@ -288,8 +288,17 @@ bool KnxMessage::get_transport_layer_sequence_num(uint8_t &value) const
   if (!is_data_frame()) {
     return  false;
   }
-  value = ((m_message[6] & 0x3C) >> 2);
-  return true;
+
+  TransportLayerServices tcf;
+  if ((get_transport_layer_services(tcf)) &&
+      (tcf == TransportLayerServices::T_Data_Connected ||
+       tcf == TransportLayerServices::T_ACK ||
+       tcf == TransportLayerServices::T_NAK))
+  {
+    value = ((m_message[6] & 0x3C) >> 2);
+    return true;
+  }
+  return false;
 }
 
 bool KnxMessage::get_apci(ApplicationLayerServices& value) const
