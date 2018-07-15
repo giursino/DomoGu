@@ -81,7 +81,6 @@ TEST(KnxMessage, get_string_not_hex)
 
     CHECK(in.get_string() == "0x00 0x01 0x02 0x0A 0xFF ");
 }
-
 TEST(KnxMessage, get_raw_empty)
 {
     KnxMessage in;
@@ -152,4 +151,97 @@ TEST(KnxMessage, get_dest)
     CHECK(out.get_value()==0x0DB9);
 }
 
+TEST(KnxMessage, dest_addr_type)
+{
+  KnxMessage in;
+
+  CHECK(!in.is_destination_group_address());
+  CHECK(!in.is_destination_broadcast_address());
+
+  in.set_raw({0xB8, 0x10, 0xAA, 0x10, 0x01, 0x69, 0x03, 0xD7, 0x01, 0xC9, 0x40, 0x01, 0x04, 0x00, 0x00, 0x00, 0xDC});
+  CHECK(!in.is_destination_group_address());
+  CHECK(!in.is_destination_broadcast_address());
+
+  in.set_raw({0xBC, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+  CHECK(in.is_destination_group_address());
+  CHECK(!in.is_destination_broadcast_address());
+}
+
+TEST(KnxMessage, TP1_L2_frame)
+{
+    KnxMessage in;
+    FrameType frame;
+    Priority priority;
+    std::uint8_t length;
+
+    CHECK(!in.get_frame_type(frame));
+    CHECK(!in.is_frame_repeated());
+    CHECK(!in.get_priority(priority));
+    CHECK(!in.get_length(length));
+
+    in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+    CHECK(!in.is_frame_repeated());
+    CHECK(in.get_priority(priority));
+    CHECK(priority==Priority::low);
+    CHECK(in.get_length(length));
+    CHECK(length==1);
+
+    in.set_raw({0x98, 0x11, 0x0F, 0x0D, 0xB9, 0xE2, 0x00, 0x80, 0x01});
+    CHECK(!in.is_frame_repeated());
+    CHECK(in.get_priority(priority));
+    CHECK(priority==Priority::urgent);
+    CHECK(in.get_length(length));
+    CHECK(length==2);
+
+    in.set_raw({0x90, 0x11, 0x0F, 0x0D, 0xB9, 0xE3, 0x00, 0x80, 0x01, 0x02});
+    CHECK(!in.is_frame_repeated());
+    CHECK(in.get_priority(priority));
+    CHECK(priority==Priority::system);
+    CHECK(in.get_length(length));
+    CHECK(length==3);
+
+    in.set_raw({0x94, 0x11, 0x0F, 0x0D, 0xB9, 0xEF, 0x00, 0x81, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F});
+    CHECK(!in.is_frame_repeated());
+    CHECK(in.get_priority(priority));
+    CHECK(priority==Priority::normal);
+    CHECK(in.get_length(length));
+    CHECK(length==15);
+
+
+    in.set_raw({0xBC, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
+    CHECK(in.is_frame_repeated());
+    CHECK(in.get_frame_type(frame));
+    CHECK(frame==FrameType::L_Data_Standard);
+    CHECK(in.get_priority(priority));
+    CHECK(priority==Priority::low);
+
+
+    in.set_raw({0xCC});
+    CHECK(!in.is_frame_repeated());
+    CHECK(in.get_frame_type(frame));
+    CHECK(frame==FrameType::ACK);
+    CHECK(!in.get_priority(priority));
+    CHECK(!in.get_length(length));
+
+    in.set_raw({0x0C});
+    CHECK(!in.is_frame_repeated());
+    CHECK(in.get_frame_type(frame));
+    CHECK(frame==FrameType::NAK);
+    CHECK(!in.get_priority(priority));
+    CHECK(!in.get_length(length));
+
+    in.set_raw({0xC0});
+    CHECK(!in.is_frame_repeated());
+    CHECK(in.get_frame_type(frame));
+    CHECK(frame==FrameType::BUSY);
+    CHECK(!in.get_priority(priority));
+    CHECK(!in.get_length(length));
+
+    in.set_raw({0x00});
+    CHECK(!in.is_frame_repeated());
+    CHECK(in.get_frame_type(frame));
+    CHECK(frame==FrameType::NAK_and_BUSY);
+    CHECK(!in.get_priority(priority));
+    CHECK(!in.get_length(length));
+}
 

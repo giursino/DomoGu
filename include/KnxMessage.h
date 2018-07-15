@@ -167,6 +167,7 @@ public:
     bool get_dest(KnxAddr &addr) const;
 
     bool get_frame_type(FrameType &value) const;
+    bool is_frame_repeated() const;
     bool get_priority(Priority &value) const;
     bool is_destination_broadcast_address() const;
     bool is_destination_group_address() const;
@@ -187,9 +188,9 @@ public:
 
 private:
     bool is_message_valid() const;
+    bool is_data_frame() const;
 
     std::vector<std::uint8_t> m_message;
-
 };
 
 #endif // KNXMESSAGE_H
