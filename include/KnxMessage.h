@@ -150,15 +150,58 @@ enum class ApplicationLayerServices {
   A_FileStream_InforReport
 };
 
+class ApplicationLayerPayload {
+public:
+
+  ApplicationLayerPayload() :
+    m_raw_value(){;}
+
+  ApplicationLayerPayload(const std::vector<std::uint8_t> &payload):
+    m_raw_value(payload) {;}
+
+  std::vector<std::uint8_t> m_raw_value;
+
+  virtual std::vector<std::uint8_t> get_value() {return m_raw_value;}
+
+};
+
+class GroupValue: public ApplicationLayerPayload {
+public:
+  GroupValue() :
+    ApplicationLayerPayload() {;}
+  GroupValue(const std::vector<std::uint8_t> &payload) :
+    ApplicationLayerPayload(payload) {;}
+
+  std::vector<std::uint8_t> get_value() {return m_raw_value;}
+};
+
+class PropertyValue: public ApplicationLayerPayload {
+public:
+  PropertyValue() :
+    ApplicationLayerPayload() {;}
+  PropertyValue(const std::vector<std::uint8_t> &payload) :
+    ApplicationLayerPayload(payload) {;}
+
+  std::uint8_t get_object_index() {return m_raw_value[0];}
+  std::uint8_t get_PID() {return m_raw_value[1];}
+  std::uint8_t get_nr_elem() {return (m_raw_value[2] & 0xF0)>>4;}
+  std::uint8_t get_start_index() {return (m_raw_value[2] & 0x0F)+m_raw_value[3];}
+  std::vector<std::uint8_t> get_value() {
+    std::vector<std::uint8_t> value = m_raw_value;
+    value.erase(value.begin(), value.begin()+4);
+    return value;
+  }
+
+};
 
 
 class KnxMessage
 {
 public:
     KnxMessage();
-    KnxMessage(const std::vector<std::uint8_t> message);
+    KnxMessage(const std::vector<std::uint8_t> &message);
 
-    bool set_raw(const std::vector<std::uint8_t> message);
+    bool set_raw(const std::vector<std::uint8_t> &message);
     bool get_raw(std::vector<std::uint8_t> &message) const;
 
     std::string get_string() const;
@@ -177,6 +220,8 @@ public:
     bool get_transport_layer_sequence_num(std::uint8_t &value) const;
     bool get_apci(ApplicationLayerServices &value) const;
     bool get_payload(std::vector<std::uint8_t> &payload) const;
+    bool get_application_layer(ApplicationLayerServices &service,
+                               ApplicationLayerPayload &payload) const;
 
     bool set_control_field(const std::uint8_t value);
     bool set_src(const KnxAddr &addr);

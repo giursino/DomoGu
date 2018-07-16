@@ -32,13 +32,12 @@ public:
 
     virtual ~KnxDriver() {;}
 
-    typedef enum {
+    enum class DriverType{
         FAKE_DRIVER,
         ECHO_DRIVER,
         VIMAR_01847,
         KNX_TINY_SERIAL
-
-    } DriverType;
+    };
 
     static KnxDriver* create_knx_driver(DriverType type);
 

@@ -30,10 +30,10 @@ using namespace log;
 
 KnxDriver* KnxDriver::create_knx_driver(KnxDriver::DriverType interface)
 {
-    if (interface == KnxDriver::KNX_TINY_SERIAL) {
+    if (interface == DriverType::KNX_TINY_SERIAL) {
         return new KnxTinySerial();
     }
-    if (interface == KnxDriver::ECHO_DRIVER) {
+    if (interface == DriverType::ECHO_DRIVER) {
         return new KnxEchoDriver();
     }
     else {

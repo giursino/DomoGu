@@ -23,19 +23,21 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxMessage.h"
 #include <sstream>
 #include <iomanip>
+#include <iostream>
+
 
 KnxMessage::KnxMessage():
   m_message()
 {
 }
 
-KnxMessage::KnxMessage(const std::vector<uint8_t> message):
+KnxMessage::KnxMessage(const std::vector<uint8_t>& message):
   m_message(message)
 {
 
 }
 
-bool KnxMessage::set_raw(const std::vector<std::uint8_t> message)
+bool KnxMessage::set_raw(const std::vector<uint8_t>& message)
 {
   m_message = message;
   return true;
@@ -383,6 +385,18 @@ bool KnxMessage::get_apci(ApplicationLayerServices& value) const
     value = ApplicationLayerServices::A_Restart;
     return true;
     break;
+  case 0x03D5:
+    value = ApplicationLayerServices::A_PropertyValue_Read;
+    return true;
+    break;
+  case 0x03D6:
+    value = ApplicationLayerServices::A_PropertyValue_Response;
+    return true;
+    break;
+  case 0x03D7:
+    value = ApplicationLayerServices::A_PropertyValue_Write;
+    return true;
+    break;
   case 0x03E5:
     value = ApplicationLayerServices::A_Link_Read;
     return true;
@@ -434,11 +448,46 @@ bool KnxMessage::get_payload(std::vector<uint8_t>& payload) const
     }
     break;
   }
+  case ApplicationLayerServices::A_PropertyValue_Write:
+  case ApplicationLayerServices::A_PropertyValue_Response:
+  {
+    std::uint8_t len;
+    if (!get_length(len)) {
+      return false;
+    }
+    payload.clear();
+    for(int i=0; i<(len-1); i++) {
+      payload.push_back(m_message[8+i]);
+    }
+    break;
+  }
 
   default:
     return false;
     break;
   }
+  return true;
+}
+
+bool KnxMessage::get_application_layer(ApplicationLayerServices& service, ApplicationLayerPayload& payload) const
+{
+  if (!is_message_valid()) {
+    return false;
+  }
+
+  if (!is_data_frame()) {
+    return false;
+  }
+
+  if (!get_apci(service)) {
+    return false;
+  }
+
+  payload.m_raw_value.clear();
+  if (!get_payload(payload.m_raw_value)) {
+    return false;
+  }
+
   return true;
 }
 
