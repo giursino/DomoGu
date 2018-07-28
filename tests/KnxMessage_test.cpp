@@ -448,6 +448,9 @@ TEST(KnxMessage, TP1_L7_A_GroupValue)
 
   CHECK(!in.get_application_layer(apci, payload));
 
+  in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x01, 0x81});
+  CHECK(!in.get_application_layer(apci, payload));
+
   in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
   CHECK(in.get_application_layer(apci, payload));
   CHECK(apci==ApplicationLayerServices::A_GroupValue_Write);
@@ -474,5 +477,4 @@ TEST(KnxMessage, TP1_L7_A_PropertyValue)
   value_expected={0x00, 0x00, 0x00, 0xDC};
   std::vector<std::uint8_t> value = (static_cast<PropertyValue*>(&payload))->get_value();
   //CHECK((static_cast<PropertyValue*>(&payload))->get_value()==payload_expected);
-
 }

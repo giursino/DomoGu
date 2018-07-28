@@ -21,10 +21,13 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include "KnxMessage.h"
+#include "log.h"
 #include <sstream>
 #include <iomanip>
 #include <iostream>
+#include <string>
 
+using namespace log;
 
 KnxMessage::KnxMessage():
   m_message()
@@ -461,8 +464,9 @@ bool KnxMessage::get_payload(std::vector<uint8_t>& payload) const
     }
     break;
   }
-
   default:
+    // not implemented
+    FILE_LOG(logDEBUG) << "APCI not implemented: " << static_cast<std::underlying_type<ApplicationLayerServices>::type>(apci) << std::endl;
     return false;
     break;
   }
