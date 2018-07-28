@@ -187,8 +187,7 @@ public:
   std::uint8_t get_nr_elem() {return (m_raw_value[2] & 0xF0)>>4;}
   std::uint8_t get_start_index() {return (m_raw_value[2] & 0x0F)+m_raw_value[3];}
   std::vector<std::uint8_t> get_value() {
-    std::vector<std::uint8_t> value = m_raw_value;
-    value.erase(value.begin(), value.begin()+4);
+    std::vector<std::uint8_t> value(m_raw_value.begin()+4, m_raw_value.end());
     return value;
   }
 
