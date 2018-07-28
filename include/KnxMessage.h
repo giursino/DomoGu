@@ -147,7 +147,7 @@ enum class ApplicationLayerServices {
   A_DomainAddressSerialNumber_Read,
   A_DomainAddressSerialNumber_Response,
   A_DomainAddressSerialNumber_Write,
-  A_FileStream_InforReport
+  A_FileStream_InfoReport
 };
 
 class ApplicationLayerPayload {

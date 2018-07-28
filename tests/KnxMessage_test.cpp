@@ -439,7 +439,7 @@ TEST(KnxMessage, TP1_L7_application_group)
 }
 
 
-TEST(KnxMessage, TP1_L7_application)
+TEST(KnxMessage, TP1_L7_A_GroupValue)
 {
   KnxMessage in;
   ApplicationLayerServices apci;
@@ -450,10 +450,23 @@ TEST(KnxMessage, TP1_L7_application)
 
   in.set_raw({0x9C, 0x11, 0x0F, 0x0D, 0xB9, 0xE1, 0x00, 0x81});
   CHECK(in.get_application_layer(apci, payload));
+  CHECK(apci==ApplicationLayerServices::A_GroupValue_Write);
+  value_expected={0x01};
+  CHECK((static_cast<GroupValue*>(&payload))->get_value()==value_expected);
+}
+
+TEST(KnxMessage, TP1_L7_A_PropertyValue)
+{
+  KnxMessage in;
+  ApplicationLayerServices apci;
+  ApplicationLayerPayload payload;
+  std::vector<std::uint8_t> value_expected;
+
+  CHECK(!in.get_application_layer(apci, payload));
 
   in.set_raw({0xB8, 0x10, 0xAA, 0x10, 0x01, 0x6A, 0x03, 0xD7, 0x01, 0xC9, 0x40, 0x01, 0x04, 0x00, 0x00, 0x00, 0xDC});
   CHECK(in.get_application_layer(apci, payload));
-
+  CHECK(apci==ApplicationLayerServices::A_PropertyValue_Write);
   CHECK((static_cast<PropertyValue*>(&payload))->get_object_index()==0x01);
   CHECK((static_cast<PropertyValue*>(&payload))->get_PID()==0xC9);
   CHECK((static_cast<PropertyValue*>(&payload))->get_nr_elem()==4);
