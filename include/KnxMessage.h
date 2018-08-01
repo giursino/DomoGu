@@ -222,14 +222,6 @@ public:
     bool get_application_layer(ApplicationLayerServices &service,
                                ApplicationLayerPayload &payload) const;
 
-    bool set_control_field(const std::uint8_t value);
-    bool set_src(const KnxAddr &addr);
-    bool set_dest(const KnxAddr &addr);
-    bool set_npci(const std::uint8_t value);
-    bool set_tpci(const std::uint8_t value);
-    bool set_apci(const std::uint16_t value);
-    bool set_apci_payload(const long long int value);
-
 private:
     bool is_message_valid() const;
     bool is_data_frame() const;

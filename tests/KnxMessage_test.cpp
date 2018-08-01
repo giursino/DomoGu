@@ -476,5 +476,5 @@ TEST(KnxMessage, TP1_L7_A_PropertyValue)
   CHECK((static_cast<PropertyValue*>(&payload))->get_start_index()==1);
   value_expected={0x00, 0x00, 0x00, 0xDC};
   std::vector<std::uint8_t> value = (static_cast<PropertyValue*>(&payload))->get_value();
-  //CHECK((static_cast<PropertyValue*>(&payload))->get_value()==payload_expected);
+  //CHECK((dynamic_cast<PropertyValue*>(&payload))->get_value()==value_expected);
 }
