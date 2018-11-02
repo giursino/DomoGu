@@ -5,6 +5,7 @@ language: cpp
 compiler: gcc
 
 before_script:
+  - apt-get install libserial-dev
   - wget https://github.com/cpputest/cpputest/releases/download/v3.8/cpputest-3.8.tar.gz -O /tmp/cpputest.tar.gz
   - tar -xzvf /tmp/cpputest.tar.gz -C /tmp
   - cd /tmp/cpputest-* && ./configure --prefix=/tmp/cpputest-build && make && make install && cd -
