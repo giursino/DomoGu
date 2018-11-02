@@ -21,10 +21,25 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include "KnxTinySerial.h"
+#include "log.h"
+
+using namespace log;
 
 KnxTinySerial::KnxTinySerial()
 {
 
+}
+
+bool KnxTinySerial::init()
+{
+    FILE_LOG(logINFO) << "Base init function";
+    return true;
+}
+
+bool KnxTinySerial::deinit()
+{
+    FILE_LOG(logINFO) << "Base deinit function";
+    return true;
 }
 
 bool KnxTinySerial::read(KnxMessage &message)

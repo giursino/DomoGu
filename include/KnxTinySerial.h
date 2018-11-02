@@ -24,12 +24,15 @@ DEALINGS IN THE SOFTWARE.
 #define KNXTINYSERIAL_H
 
 #include "KnxDriver.h"
+#include <SerialPort.h>
 
 class KnxTinySerial : public KnxDriver
 {
 public:
     KnxTinySerial();
 
+    bool init();
+    bool deinit();
     bool read(KnxMessage &message);
     bool write(const KnxMessage &message);
 };

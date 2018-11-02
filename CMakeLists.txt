@@ -15,8 +15,8 @@ set (CMAKE_CXX_STANDARD 11)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11  -Wl,--no-as-needed")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
 
-#find_package(PkgConfig REQUIRED)
-#pkg_check_modules(FCGI REQUIRED fcgi)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBSERIAL REQUIRED libserial)
 
 add_subdirectory(src)
 if(ENABLE_TEST)
