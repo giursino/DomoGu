@@ -1,5 +1,5 @@
 /*
-Copyright 2018 giursino
+Copyright 2018 Giuseppe Ursino
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -25,20 +25,27 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace log;
 
-KnxTinySerial::KnxTinySerial()
+KnxTinySerial::KnxTinySerial():
+  m_serial_port_name("/dev/serial")
 {
 
 }
 
 bool KnxTinySerial::init()
 {
-    FILE_LOG(logINFO) << "Base init function";
+    FILE_LOG(logINFO) << "KnxTinySerial init function";
+    //m_serial_port = new SerialPort(m_serial_port_name);
+    //m_serial_port->Open();
+    //m_serial_port->SetBaudRate(SerialPort::BaudRate::BAUD_19200);
     return true;
 }
 
 bool KnxTinySerial::deinit()
 {
-    FILE_LOG(logINFO) << "Base deinit function";
+    FILE_LOG(logINFO) << "KnxTinySerial deinit function";
+    m_serial_port->Close();
+    delete(m_serial_port);
+    m_serial_port=nullptr;
     return true;
 }
 

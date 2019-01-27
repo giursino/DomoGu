@@ -1,5 +1,5 @@
 /*
-Copyright 2018 giursino
+Copyright 2018 Giuseppe Ursino
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -24,6 +24,7 @@ DEALINGS IN THE SOFTWARE.
 #define KNXTINYSERIAL_H
 
 #include "KnxDriver.h"
+#include <string>
 #include <SerialPort.h>
 
 class KnxTinySerial : public KnxDriver
@@ -35,6 +36,9 @@ public:
     bool deinit();
     bool read(KnxMessage &message);
     bool write(const KnxMessage &message);
+private:
+    SerialPort* m_serial_port;
+    std::string m_serial_port_name;
 };
 
 #endif // KNXTINYSERIAL_H

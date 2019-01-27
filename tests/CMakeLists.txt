@@ -22,13 +22,13 @@ file(GLOB_RECURSE APP_HEADERS ${CMAKE_SOURCE_DIR}/include/*.h)
 
 list(REMOVE_ITEM APP_SOURCES ${CMAKE_SOURCE_DIR}/src/main.cpp)
 
+link_directories(
+    ${CPPUTEST_LIBRARY_DIRS}
+)
+
 include_directories(
     ${CPPUTEST_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/include
-)
-
-link_directories(
-    ${CPPUTEST_LIBRARIES}
 )
 
 add_executable(${TARGET_NAME}
@@ -38,8 +38,9 @@ add_executable(${TARGET_NAME}
 )
 
 target_link_libraries(${TARGET_NAME}
-    ${CPPUTEST_LDFLAGS}
+    ${CPPUTEST_LIBRARIES}
     pthread
+    ${LIBSERIAL_LIBRARIES}
 )
 
 add_test(AllTests ${TARGET_NAME})
