@@ -30,7 +30,7 @@ KnxFakeDriver::KnxFakeDriver()
 
 }
 
-bool KnxFakeDriver::read(KnxMessage &message)
+bool KnxFakeDriver::read(__attribute__((unused)) KnxMessage &message)
 {
     FILE_LOG(logWARNING) << "Fake method";
     return true;

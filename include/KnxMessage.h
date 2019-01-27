@@ -32,14 +32,16 @@ class KnxAddr
 public:
     KnxAddr(): m_addr(0) {}
 
-    KnxAddr(const int hex_addr): m_addr(hex_addr) {}
+    KnxAddr(const std::uint16_t hex_addr): m_addr(hex_addr) {}
 
-    KnxAddr(const int main, const int sub, const int line):
-        m_addr (((main & 0x0F)<< (8+4)) +
-               ((sub & 0x0F) << (8)) +
-               (line & 0xFF)) {}
+    KnxAddr(const std::uint8_t main, const std::uint8_t sub, const std::uint8_t line):
+        m_addr (static_cast<std::uint16_t>(
+                ((main & 0x0F)<< (8+4)) +
+                ((sub & 0x0F) << (8)) +
+                (line & 0xFF))
+                ) {}
 
-    void set_value(int hex_addr) {m_addr = hex_addr;}
+    void set_value(std::uint16_t hex_addr) {m_addr = hex_addr;}
 
     int get_value() {return m_addr;}
 
@@ -159,6 +161,8 @@ public:
   ApplicationLayerPayload(const std::vector<std::uint8_t> &payload):
     m_raw_value(payload) {;}
 
+  virtual ~ApplicationLayerPayload();
+
   std::vector<std::uint8_t> m_raw_value;
 
   virtual std::vector<std::uint8_t> get_value() {return m_raw_value;}
@@ -171,6 +175,7 @@ public:
     ApplicationLayerPayload() {;}
   GroupValue(const std::vector<std::uint8_t> &payload) :
     ApplicationLayerPayload(payload) {;}
+  ~GroupValue();
 
   std::vector<std::uint8_t> get_value() {return m_raw_value;}
 };
@@ -181,6 +186,7 @@ public:
     ApplicationLayerPayload() {;}
   PropertyValue(const std::vector<std::uint8_t> &payload) :
     ApplicationLayerPayload(payload) {;}
+  ~PropertyValue();
 
   std::uint8_t get_object_index() {return m_raw_value[0];}
   std::uint8_t get_PID() {return m_raw_value[1];}

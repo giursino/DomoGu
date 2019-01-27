@@ -26,3 +26,8 @@ KnxClientInterface::KnxClientInterface()
 {
 
 }
+
+KnxClientInterface::~KnxClientInterface()
+{
+
+}

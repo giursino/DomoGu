@@ -67,7 +67,7 @@ bool KnxEchoDriver::write(const KnxMessage &message)
     FILE_LOG(logINFO) << "Waiting for writing...";
 
     std::unique_lock<std::mutex> lock(m_lock);
-    m_not_full.wait(lock, [this]{return true;});
+    m_not_full.wait(lock, []{return true;});
 
     m_buffer.push(message);
 

@@ -29,6 +29,10 @@ DEALINGS IN THE SOFTWARE.
 
 using namespace log;
 
+ApplicationLayerPayload::~ApplicationLayerPayload() {;}
+GroupValue::~GroupValue(){;}
+PropertyValue::~PropertyValue(){;}
+
 KnxMessage::KnxMessage():
   m_message()
 {
@@ -71,7 +75,7 @@ bool KnxMessage::get_src(KnxAddr &addr) const
     return  false;
   }
 
-  addr.set_value((m_message[1]<<8) + m_message[2]);
+  addr.set_value(static_cast<std::uint16_t>(m_message[1]<<8) + m_message[2]);
   return true;
 }
 
@@ -85,7 +89,7 @@ bool KnxMessage::get_dest(KnxAddr &addr) const
     return  false;
   }
 
-  addr.set_value((m_message[3]<<8) + m_message[4]);
+  addr.set_value(static_cast<std::uint16_t>(m_message[3]<<8) + m_message[4]);
   return true;
 }
 
@@ -247,11 +251,9 @@ bool KnxMessage::get_transport_layer_services(TransportLayerServices &value) con
         value = TransportLayerServices::T_Data_Group;
         return true;
       }
-      break;
     case 0x04:
       value = TransportLayerServices::T_Data_Tag_Group;
       return true;
-      break;
     }
   }
   else {
@@ -320,98 +322,75 @@ bool KnxMessage::get_apci(ApplicationLayerServices& value) const
   case 0x0040:
     value = ApplicationLayerServices::A_GroupValue_Response;
     return true;
-    break;
   case 0x0080:
     value = ApplicationLayerServices::A_GroupValue_Write;
     return true;
-    break;
   case 0x0180:
     value = ApplicationLayerServices::A_ADC_Read;
     return true;
-    break;
   case 0x01C0:
     value = ApplicationLayerServices::A_ADC_Response;
     return true;
-    break;
   case 0x0200:
     value = ApplicationLayerServices::A_Memory_Read;
     return true;
-    break;
   case 0x0240:
     value = ApplicationLayerServices::A_Memory_Response;
     return true;
-    break;
   case 0x0280:
     value = ApplicationLayerServices::A_Memory_Write;
     return true;
-    break;
   }
 
   switch (((m_message[6] << 8) + m_message[7]) & 0x03FF) {
   case 0x0000:
     value = ApplicationLayerServices::A_GroupValue_Read;
     return true;
-    break;
   case 0x00C0:
     value = ApplicationLayerServices::A_IndividualAddress_Write;
     return true;
-    break;
   case 0x0100:
     value = ApplicationLayerServices::A_IndividualAddress_Read;
     return true;
-    break;
   case 0x0140:
     value = ApplicationLayerServices::A_IndividualAddress_Response;
     return true;
-    break;
   case 0x02C7:
     value = ApplicationLayerServices::A_FunctionPropertyCommand;
     return true;
-    break;
   case 0x02C8:
     value = ApplicationLayerServices::A_FunctionPropertyState_Read;
     return true;
-    break;
   case 0x02C9:
     value = ApplicationLayerServices::A_FunctionPropertyState_Response;
     return true;
-    break;
   case 0x0300:
     value = ApplicationLayerServices::A_DeviceDescriptor_Read;
     return true;
-    break;
   case 0x0340:
     value = ApplicationLayerServices::A_DeviceDescriptor_Response;
     return true;
-    break;
   case 0x0380:
     value = ApplicationLayerServices::A_Restart;
     return true;
-    break;
   case 0x03D5:
     value = ApplicationLayerServices::A_PropertyValue_Read;
     return true;
-    break;
   case 0x03D6:
     value = ApplicationLayerServices::A_PropertyValue_Response;
     return true;
-    break;
   case 0x03D7:
     value = ApplicationLayerServices::A_PropertyValue_Write;
     return true;
-    break;
   case 0x03E5:
     value = ApplicationLayerServices::A_Link_Read;
     return true;
-    break;
   case 0x03E6:
     value = ApplicationLayerServices::A_Link_Response;
     return true;
-    break;
   case 0x03E7:
     value = ApplicationLayerServices::A_Link_Write;
     return true;
-    break;
   }
   return false;
 }
@@ -445,7 +424,7 @@ bool KnxMessage::get_payload(std::vector<uint8_t>& payload) const
       payload.push_back(m_message[7] & 0x3F);
     }
     else {
-      for(int i=0; i<(len-1); i++) {
+      for(std::uint8_t i=0; i<(len-1); i++) {
         payload.push_back(m_message[8+i]);
       }
     }
@@ -459,7 +438,7 @@ bool KnxMessage::get_payload(std::vector<uint8_t>& payload) const
       return false;
     }
     payload.clear();
-    for(int i=0; i<(len-1); i++) {
+    for(std::uint8_t i=0; i<(len-1); i++) {
       payload.push_back(m_message[8+i]);
     }
     break;
@@ -468,7 +447,6 @@ bool KnxMessage::get_payload(std::vector<uint8_t>& payload) const
     // not implemented
     FILE_LOG(logDEBUG) << "APCI not implemented: " << static_cast<std::underlying_type<ApplicationLayerServices>::type>(apci) << std::endl;
     return false;
-    break;
   }
   return true;
 }
@@ -503,4 +481,3 @@ bool KnxMessage::is_message_valid() const
   // TODO: check last octect
   return true;
 }
-
