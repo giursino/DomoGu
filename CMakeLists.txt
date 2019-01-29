@@ -1,15 +1,15 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 
 # verbose makefile
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
-project(DomoGuProject)
+project(DomoGuProject VERSION 1.0.0 LANGUAGES CXX)
 
 # project version
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 0)
 set(VERSION_PATCH 0)
-message(STATUS "Project version: ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
+message(STATUS "Project version: ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 
 # get git revision
 find_package(Git)
@@ -55,7 +55,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
 find_package(PkgConfig REQUIRED)
 
 # check required libraries
-pkg_check_modules(LIBSERIAL REQUIRED libserial)
+pkg_check_modules(LIBKNXTINYSERIAL REQUIRED KnxTinySerial)
 
 add_subdirectory(src)
 

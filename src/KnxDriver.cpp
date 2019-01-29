@@ -21,7 +21,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include "KnxDriver.h"
-#include "KnxTinySerial.h"
+#include "KnxTinySerialDriver.h"
 #include "KnxFakeDriver.h"
 #include "KnxEchoDriver.h"
 #include "log.h"
@@ -31,7 +31,7 @@ using namespace log;
 KnxDriver* KnxDriver::create_knx_driver(KnxDriver::DriverType interface)
 {
     if (interface == DriverType::KNX_TINY_SERIAL) {
-        return new KnxTinySerial();
+        return new KnxTinySerialDriver();
     }
     if (interface == DriverType::ECHO_DRIVER) {
         return new KnxEchoDriver();

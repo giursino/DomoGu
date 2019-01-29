@@ -20,41 +20,24 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include "KnxTinySerial.h"
-#include "log.h"
+#ifndef KNXTINYSERIALDRIVER_H
+#define KNXTINYSERIALDRIVER_H
 
-using namespace log;
+#include "KnxDriver.h"
+#include <string>
+#include <KnxTinySerial.h>
 
-KnxTinySerial::KnxTinySerial():
-  m_serial_port_name("/dev/serial")
+class KnxTinySerialDriver : public KnxDriver
 {
+public:
+    KnxTinySerialDriver();
 
-}
+    bool init();
+    bool deinit();
+    bool read(KnxMessage &message);
+    bool write(const KnxMessage &message);
+private:
+    std::string m_serial_port_name;
+};
 
-bool KnxTinySerial::init()
-{
-    FILE_LOG(logINFO) << "KnxTinySerial init function";
-    //m_serial_port = new SerialPort(m_serial_port_name);
-    //m_serial_port->Open();
-    //m_serial_port->SetBaudRate(SerialPort::BaudRate::BAUD_19200);
-    return true;
-}
-
-bool KnxTinySerial::deinit()
-{
-    FILE_LOG(logINFO) << "KnxTinySerial deinit function";
-    m_serial_port->Close();
-    delete(m_serial_port);
-    m_serial_port=nullptr;
-    return true;
-}
-
-bool KnxTinySerial::read(KnxMessage &message)
-{
-    return false;
-}
-
-bool KnxTinySerial::write(const KnxMessage &message)
-{
-    return false;
-}
+#endif // KNXTINYSERIALDRIVER_H

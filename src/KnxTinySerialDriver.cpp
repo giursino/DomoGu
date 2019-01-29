@@ -20,25 +20,35 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef KNXTINYSERIAL_H
-#define KNXTINYSERIAL_H
+#include "KnxTinySerialDriver.h"
+#include "log.h"
 
-#include "KnxDriver.h"
-#include <string>
-#include <SerialPort.h>
+using namespace log;
 
-class KnxTinySerial : public KnxDriver
+KnxTinySerialDriver::KnxTinySerialDriver():
+  m_serial_port_name("/dev/serial0")
 {
-public:
-    KnxTinySerial();
 
-    bool init();
-    bool deinit();
-    bool read(KnxMessage &message);
-    bool write(const KnxMessage &message);
-private:
-    SerialPort* m_serial_port;
-    std::string m_serial_port_name;
-};
+}
 
-#endif // KNXTINYSERIAL_H
+bool KnxTinySerialDriver::init()
+{
+    FILE_LOG(logINFO) << "KnxTinySerial init function";
+    return true;
+}
+
+bool KnxTinySerialDriver::deinit()
+{
+    FILE_LOG(logINFO) << "KnxTinySerial deinit function";
+    return true;
+}
+
+bool KnxTinySerialDriver::read(KnxMessage &message)
+{
+    return false;
+}
+
+bool KnxTinySerialDriver::write(const KnxMessage &message)
+{
+    return false;
+}

@@ -33,4 +33,4 @@
 CMakeLists.txt.user
 
 # Build
-build-*
+build*
