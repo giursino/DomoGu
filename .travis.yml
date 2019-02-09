@@ -5,11 +5,23 @@ language: cpp
 compiler: gcc
 
 before_script:
+  # apt install
   - sudo apt-get update
   - sudo apt-get install -y libserial-dev
+  
+  # lib boost
+  #- sudo add-apt-repository ppa:mhier/libboost-latest
+  #- sudo apt-get update
+  #- sudo apt-get install -y libboost-filesystem1.62-dev libboost-program-options1.62-dev
+  
+  # cpputest
   - wget https://github.com/cpputest/cpputest/releases/download/v3.8/cpputest-3.8.tar.gz -O /tmp/cpputest.tar.gz
   - tar -xzvf /tmp/cpputest.tar.gz -C /tmp
   - cd /tmp/cpputest-* && ./configure --prefix=/tmp/cpputest-build && make && make install && cd -
+  
+  # knxtinyserial
+  - wget https://github.com/giursino/knxtinyserial/releases/download/v1.1.0/KnxTinySerialProject-1.1.0-Linux-x86_64.tar.gz -O /tmp/KnxTinySerialProject.tar.gz
+  - tar xvfz /tmp/KnxTinySerialProject.tar.gz --strip 1 -C /
 
 
 # Build steps
