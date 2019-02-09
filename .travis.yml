@@ -21,7 +21,7 @@ before_script:
   
   # knxtinyserial
   - wget https://github.com/giursino/knxtinyserial/releases/download/v1.1.0/KnxTinySerialProject-1.1.0-Linux-x86_64.tar.gz -O /tmp/KnxTinySerialProject.tar.gz
-  - tar xvfz /tmp/KnxTinySerialProject.tar.gz --strip 1 -C /
+  - sudo tar xvfz /tmp/KnxTinySerialProject.tar.gz --strip 1 -C /
 
 
 # Build steps
