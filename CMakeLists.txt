@@ -6,9 +6,6 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 project(DomoGuProject VERSION 1.0.0 LANGUAGES CXX)
 
 # project version
-set(VERSION_MAJOR 1)
-set(VERSION_MINOR 0)
-set(VERSION_PATCH 0)
 message(STATUS "Project version: ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 
 # get git revision
@@ -26,6 +23,9 @@ if(GIT_FOUND)
 else()
     set(GIT_REVISION "unknown")
 endif()
+
+# include GNU standard dirs
+include(GNUInstallDirs)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
@@ -56,6 +56,16 @@ find_package(PkgConfig REQUIRED)
 
 # check required libraries
 pkg_check_modules(LIBKNXTINYSERIAL REQUIRED KnxTinySerial)
+
+# build a CPack driven installer package
+include (InstallRequiredSystemLibraries)
+set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set (CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set (CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+set (CPACK_SYSTEM_NAME "${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
+set (CPACK_SET_DESTDIR "ON") # absolute path install
+include (CPack)
 
 add_subdirectory(src)
 
