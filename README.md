@@ -6,7 +6,7 @@
 ### Requires
 - cmake >= 3.5
 - pkg-config
-- [knxtinyserial] (https://github.com/giursino/knxtinyserial)
+- [knxtinyserial](https://github.com/giursino/knxtinyserial)
 
 ### Building
 The project require a working C++11 compiler
