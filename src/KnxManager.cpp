@@ -51,7 +51,7 @@ void KnxManager::Loop()
   while(true) {
     KnxMessage message;
 
-    m_driver->read(message);
+    if ((m_driver->read(message)) == false) continue;
     FILE_LOG(logDEBUG) << "Received message: " << message.get_string();
 
     for (auto it=m_clients.begin(); it!=m_clients.end(); ++it) {

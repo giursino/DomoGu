@@ -56,7 +56,7 @@ void AppGraphTemperature::Loop()
 
 void AppGraphTemperature::OnMessageReceived(KnxMessage &message) const
 {
-    FILE_LOG(logINFO) << "Received message: " << message.get_string();
+    FILE_LOG(logINFO) << " **** Received message: " << message.get_string();
 
     // TODO: qui non si possono modificare i membri della classe ma si deve notificare
     // tramite eventi la ricezione di un messaggio (thread safe)

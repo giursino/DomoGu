@@ -30,7 +30,7 @@ class KnxDriver
 {
 public:
 
-    virtual ~KnxDriver() {;}
+    virtual ~KnxDriver() = default;
 
     enum class DriverType{
         FAKE_DRIVER,

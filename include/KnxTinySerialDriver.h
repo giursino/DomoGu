@@ -37,7 +37,11 @@ public:
     bool read(KnxMessage &message);
     bool write(const KnxMessage &message);
 private:
+    static const size_t loop_ms=100;
+    bool m_is_loaded;
     std::string m_serial_port_name;
+    SerialPort* m_serial_port;
+    KnxTinySerial* m_driver;
 };
 
 #endif // KNXTINYSERIALDRIVER_H
