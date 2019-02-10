@@ -1,4 +1,5 @@
 set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR armv6l)
 set(CMAKE_SYSTEM_VERSION 1)
  
 # Specify the sdk path
@@ -9,7 +10,7 @@ set(CMAKE_C_COMPILER   "${SDK_PATH}/bin/arm-linux-gnueabihf-gcc")
 set(CMAKE_CXX_COMPILER "${SDK_PATH}/bin/arm-linux-gnueabihf-g++")
  
 # Specify flags
-#set(COMMON_FLAGS "-march=armv7-a -marm -mfpu=neon  -mfloat-abi=hard -mcpu=cortex-a9")
+set(COMMON_FLAGS "-march=armv7-a -marm -mfpu=neon  -mfloat-abi=hard -mcpu=cortex-a9")
 set(COMMON_FLAGS "")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMMON_FLAGS}" CACHE STRING "")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COMMON_FLAGS}" CACHE STRING "")
