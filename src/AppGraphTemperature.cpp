@@ -29,35 +29,42 @@ DEALINGS IN THE SOFTWARE.
 using namespace log;
 
 AppGraphTemperature::AppGraphTemperature(KnxManager *knx):
-    m_knx(knx)
+  m_knx(knx)
 {
-    FILE_LOG(logINFO) << "AppGraphTemperature loaded";
+  FILE_LOG(logINFO) << "AppGraphTemperature loaded";
 
-    m_thread = std::thread([this] {Loop();});
+  m_thread = std::thread([this] {Loop();});
 }
 
 AppGraphTemperature::~AppGraphTemperature()
 {
-    m_thread.join();
-    m_knx->Deregister(this);
-    FILE_LOG(logINFO) << "AppGraphTemperature unloaded";
+  m_thread.join();
+  m_knx->Deregister(this);
+  FILE_LOG(logINFO) << "AppGraphTemperature unloaded";
 }
 
 void AppGraphTemperature::Loop()
 {
-    FILE_LOG(logINFO) << "Registering...";
-    m_knx->Register(this);
+  FILE_LOG(logINFO) << "Registering...";
+  m_knx->Register(this);
 
-    FILE_LOG(logINFO) << "Starting loop...";
-    while(true) {
-        std::this_thread::sleep_for(std::chrono::seconds(10));
-    }
+  FILE_LOG(logINFO) << "Starting loop...";
+  while(true) {
+    std::this_thread::sleep_for(std::chrono::seconds(10));
+  }
 }
 
 void AppGraphTemperature::OnMessageReceived(KnxMessage &message) const
 {
-    FILE_LOG(logINFO) << " **** Received message: " << message.get_string();
+  // TODO: qui non si possono modificare i membri della classe ma si deve notificare
+  // tramite eventi la ricezione di un messaggio (thread safe)
 
-    // TODO: qui non si possono modificare i membri della classe ma si deve notificare
-    // tramite eventi la ricezione di un messaggio (thread safe)
+  FILE_LOG(logINFO) << " **** Received message: " << message.get_string();
+  KnxAddr dest_addr;
+  if (!message.get_dest(dest_addr)) return;
+
+  if (dest_addr.get_value() == 0x0C72) {
+    FILE_LOG(logINFO) << " *********************** TA ************************* ";
+  }
+
 }
