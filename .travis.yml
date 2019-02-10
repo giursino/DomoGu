@@ -28,8 +28,6 @@ before_script:
 
 # Build steps
 script:
-  - cd $TRAVIS_BUILD_DIR
-  - mkdir build
-  - cd build
+  - cd $TRAVIS_BUILD_DIR && mkdir build && cd build
   - cmake -DENABLE_TEST=ON -DCPPUTEST_PATH=/tmp/cpputest-build ..
   - make
