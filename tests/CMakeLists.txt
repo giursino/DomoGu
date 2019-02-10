@@ -9,8 +9,8 @@ else()
     endif()
     message(STATUS "Using CppUTest path: ${CPPUTEST_PATH}")
     set(CPPUTEST_INCLUDE_DIRS ${CPPUTEST_PATH}/include)
-    set(CPPUTEST_LIBRARIES ${CPPUTEST_PATH}/lib)
-    set(CPPUTEST_LDFLAGS CppUTest CppUTestExt)
+    set(CPPUTEST_LIBRARY_DIRS ${CPPUTEST_PATH}/lib)
+    set(CPPUTEST_LIBRARIES CppUTest CppUTestExt)
 endif()
 
 
