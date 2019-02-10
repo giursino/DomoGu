@@ -1,6 +1,6 @@
 # DomoGu
 
-## A simple building automation application
+## A simple home automation application
 [![Build Status](https://travis-ci.org/giursino/DomoGu.svg?branch=master)](https://travis-ci.org/giursino/DomoGu)
 
 ### Requires
