@@ -4,9 +4,9 @@
 [![Build Status](https://travis-ci.org/giursino/DomoGu.svg?branch=master)](https://travis-ci.org/giursino/DomoGu)
 
 ### Requires
-- cmake
-- libserial (sudo apt-get install libserial-dev)
-
+- cmake >= 3.5
+- pkg-config
+- [knxtinyserial] (https://github.com/giursino/knxtinyserial)
 
 ### Building
 The project require a working C++11 compiler
