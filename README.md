@@ -8,8 +8,8 @@
 #### Requires
 * C++11 (GCC 6.3)
 * CMAKE >= 3.5
-- pkgconfig
-- [knxtinyserial](https://github.com/giursino/knxtinyserial)
+* pkgconfig
+* [knxtinyserial](https://github.com/giursino/knxtinyserial)
 
 #### Compiling and building
 The project require a working C++11 compiler
