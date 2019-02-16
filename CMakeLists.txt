@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 # verbose makefile
-set(CMAKE_VERBOSE_MAKEFILE OFF)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 project(DomoGuProject VERSION 1.0.0 LANGUAGES CXX)
 
@@ -56,6 +56,18 @@ find_package(PkgConfig REQUIRED)
 
 # check required libraries
 pkg_check_modules(LIBKNXTINYSERIAL REQUIRED KnxTinySerial)
+
+# include libraries to all targets of project
+include_directories(
+    ${LIBKNXTINYSERIAL_INCLUDE_DIRS}
+)
+link_libraries(
+    pthread
+    ${LIBKNXTINYSERIAL_LIBRARIES}
+)
+add_compile_options(
+    ${LIBKNXTINYSERIAL_CFLAGS_OTHER}
+)
 
 # build a CPack driven installer package
 include (InstallRequiredSystemLibraries)

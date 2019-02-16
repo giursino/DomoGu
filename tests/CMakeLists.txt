@@ -22,28 +22,27 @@ file(GLOB_RECURSE APP_HEADERS ${CMAKE_SOURCE_DIR}/include/*.h)
 
 list(REMOVE_ITEM APP_SOURCES ${CMAKE_SOURCE_DIR}/src/main.cpp)
 
-link_directories(
-    ${CPPUTEST_LIBRARY_DIRS}
-)
-
-include_directories(
-    ${CPPUTEST_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}/include
-)
-
 add_executable(${TARGET_NAME}
     ${TEST_SOURCES}
     ${APP_SOURCES}
     ${APP_HEADERS}
 )
 
+link_directories(
+    ${CPPUTEST_LIBRARY_DIRS}
+)
+
+target_include_directories(${TARGET_NAME}
+PRIVATE
+    ${CPPUTEST_INCLUDE_DIRS}
+    ${CMAKE_SOURCE_DIR}/include
+)
+
 target_link_libraries(${TARGET_NAME}
     ${CPPUTEST_LIBRARIES}
-    pthread
-    ${LIBSERIAL_LIBRARIES}
 )
 
 add_test(AllTests ${TARGET_NAME})
 
 # run the test once the build is done
-add_custom_command(TARGET ${TARGET_NAME} COMMAND ./${TARGET_NAME} POST_BUILD)
+#add_custom_command(TARGET ${TARGET_NAME} COMMAND ./${TARGET_NAME} POST_BUILD)
