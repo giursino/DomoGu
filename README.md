@@ -37,6 +37,7 @@ mkdir build
 cd build 
 cmake -DENABLE_TEST=ON ..
 cmake --build .
+ctest
 ```
 
 Else download latest [CppUtest](https://cpputest.github.io) source and install to your local directory and call cmake setting variable CPPUTEST_PATH. 
@@ -53,6 +54,7 @@ mkdir build
 cd build 
 cmake -DENABLE_TEST=ON -DCPPUTEST_PATH=$HOME/cpputest-build ..
 cmake --build .
+ctest
 ```
 
 #### Build distribution
