@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 # verbose makefile
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 project(DomoGuProject VERSION 1.0.0 LANGUAGES CXX)
 

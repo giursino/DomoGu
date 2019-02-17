@@ -10,7 +10,7 @@ else()
     message(STATUS "Using CppUTest path: ${CPPUTEST_PATH}")
     set(CPPUTEST_INCLUDE_DIRS ${CPPUTEST_PATH}/include)
     set(CPPUTEST_LIBRARY_DIRS ${CPPUTEST_PATH}/lib)
-    set(CPPUTEST_LIBRARIES CppUTest CppUTestExt)
+    set(CPPUTEST_LIBRARIES ${CPPUTEST_LIBRARY_DIRS}/libCppUTest.a ${CPPUTEST_LIBRARY_DIRS}/libCppUTestExt.a)
 endif()
 
 
@@ -26,10 +26,6 @@ add_executable(${TARGET_NAME}
     ${TEST_SOURCES}
     ${APP_SOURCES}
     ${APP_HEADERS}
-)
-
-link_directories(
-    ${CPPUTEST_LIBRARY_DIRS}
 )
 
 target_include_directories(${TARGET_NAME}
