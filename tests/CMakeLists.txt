@@ -38,7 +38,4 @@ target_link_libraries(${TARGET_NAME}
     ${CPPUTEST_LIBRARIES}
 )
 
-add_test(AllTests ${TARGET_NAME})
-
-# run the test once the build is done
-#add_custom_command(TARGET ${TARGET_NAME} COMMAND ./${TARGET_NAME} POST_BUILD)
+add_test(AllTests ${TARGET_NAME} "-v")

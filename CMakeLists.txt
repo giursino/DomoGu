@@ -82,6 +82,6 @@ include (CPack)
 add_subdirectory(src)
 
 if(ENABLE_TEST)
-  add_subdirectory(tests)
   enable_testing()
+  add_subdirectory(tests)
 endif(ENABLE_TEST)
