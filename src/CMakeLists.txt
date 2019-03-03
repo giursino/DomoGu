@@ -9,9 +9,8 @@ add_executable(${TARGET_NAME}
 )
 
 target_include_directories(${TARGET_NAME}
-PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}
 PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/include
 )
 
@@ -19,7 +18,7 @@ target_link_libraries(${TARGET_NAME}
 )
 
 target_compile_options(${TARGET_NAME}
-PUBLIC
+PRIVATE
 )
 
 install (TARGETS ${TARGET_NAME} DESTINATION bin)

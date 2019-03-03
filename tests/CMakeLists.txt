@@ -18,7 +18,7 @@ set(TARGET_NAME DomoGu-test)
 
 file(GLOB_RECURSE TEST_SOURCES *.cpp)
 file(GLOB_RECURSE APP_SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
-file(GLOB_RECURSE APP_HEADERS ${CMAKE_SOURCE_DIR}/include/*.h)
+file(GLOB_RECURSE APP_HEADERS ${CMAKE_SOURCE_DIR}/src/*.h ${CMAKE_SOURCE_DIR}/include/*.h)
 
 list(REMOVE_ITEM APP_SOURCES ${CMAKE_SOURCE_DIR}/src/main.cpp)
 
@@ -31,6 +31,7 @@ add_executable(${TARGET_NAME}
 target_include_directories(${TARGET_NAME}
 PRIVATE
     ${CPPUTEST_INCLUDE_DIRS}
+    ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/include
 )
 
