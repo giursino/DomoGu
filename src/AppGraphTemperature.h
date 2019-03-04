@@ -23,23 +23,28 @@ DEALINGS IN THE SOFTWARE.
 #ifndef APPGRAPHTEMPERATURE_H
 #define APPGRAPHTEMPERATURE_H
 
+#include <thread>
 #include "IKnxClient.h"
 #include "KnxManager.h"
-#include <thread>
+#include "RRDToolWrapper.h"
 
 class AppGraphTemperature : public IKnxClient
 {
 public:
-    AppGraphTemperature(KnxManager *knx);
-    ~AppGraphTemperature();
+  AppGraphTemperature(KnxManager *knx);
+  ~AppGraphTemperature();
 
-    [[ noreturn ]] void Loop();
+  void Loop();
 
-    void OnMessageReceived(KnxMessage &message) const;
+  void OnMessageReceived(KnxMessage &message) const;
 
 private:
-    KnxManager* m_knx;
-    std::thread m_thread;
+  KnxManager* m_knx;
+  std::thread m_thread;
+
+  RRDToolWrapper m_rrd;
+
+  bool Init();
 };
 
 #endif // APPGRAPHTEMPERATURE_H

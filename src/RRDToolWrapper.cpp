@@ -22,7 +22,33 @@ DEALINGS IN THE SOFTWARE.
 
 #include "RRDToolWrapper.h"
 
-RRDToolWrapper::RRDToolWrapper()
+RRDToolWrapper::RRDToolWrapper(const std::string filename):
+  m_filename(filename)
+{
+
+}
+
+void RRDToolWrapper::CreateDb()
+{
+
+}
+
+bool RRDToolWrapper::IsDbValid()
+{
+  return true;
+}
+
+bool RRDToolWrapper::UpdateDb(const std::string value)
+{
+  return true;
+}
+
+bool RRDToolWrapper::DumpDb(std::string dump)
+{
+  return true;
+}
+
+void RRDToolWrapper::CreateGraph()
 {
 
 }

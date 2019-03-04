@@ -28,14 +28,16 @@ DEALINGS IN THE SOFTWARE.
 class RRDToolWrapper
 {
 public:
-  RRDToolWrapper();
+  RRDToolWrapper(const std::string filename);
 
-  void CreateDb(const std::string filename);
-  bool IsDbValid(const std::string filename);
-  bool UpdateDb(const std::string filename, const std::string value);
-  bool DumpDb(const std::string filename, std::string dump);
-  void CreateGraph(const std::string filename);
+  void CreateDb();
+  bool IsDbValid();
+  bool UpdateDb(const std::string value);
+  bool DumpDb(std::string dump);
+  void CreateGraph();
 
+private:
+  std::string m_filename;
 };
 
 #endif // RRDTOOLWRAPPER_H

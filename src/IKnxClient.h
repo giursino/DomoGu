@@ -31,6 +31,7 @@ public:
   IKnxClient() = default;
   virtual ~IKnxClient() = default;
 
+  // TODO: not thread safe
   virtual void OnMessageReceived(KnxMessage &message) const = 0;
 };
 

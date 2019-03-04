@@ -22,14 +22,15 @@ DEALINGS IN THE SOFTWARE.
 
 #include "AppGraphTemperature.h"
 
-#include "log.h"
 #include <chrono>
 #include <cstdint>
+#include "log.h"
 
 using namespace log;
 
 AppGraphTemperature::AppGraphTemperature(KnxManager *knx):
-  m_knx(knx)
+  m_knx(knx),
+  m_rrd("$HOME/rrd_temperature.db")
 {
   FILE_LOG(logINFO) << "AppGraphTemperature loaded";
 
@@ -45,14 +46,15 @@ AppGraphTemperature::~AppGraphTemperature()
 
 void AppGraphTemperature::Loop()
 {
-  FILE_LOG(logINFO) << "Registering...";
-  m_knx->Register(this);
+  bool running = Init();
 
   FILE_LOG(logINFO) << "Starting loop...";
-  while(true) {
+  while(running) {
+
+    FILE_LOG(logINFO) << "Get temperature...";
     KnxMessage msg({0xBC, 0x11, 0x0F, 0x0C, 0x72, 0xE1, 0x00, 0x00});
     m_knx->SendMessage(msg);
-    std::this_thread::sleep_for(std::chrono::seconds(10));
+    std::this_thread::sleep_for(std::chrono::seconds(30));
   }
 }
 
@@ -61,12 +63,33 @@ void AppGraphTemperature::OnMessageReceived(KnxMessage &message) const
   // TODO: qui non si possono modificare i membri della classe ma si deve notificare
   // tramite eventi la ricezione di un messaggio (thread safe)
 
-  //FILE_LOG(logINFO) << " **** Received message: " << message.get_string();
   KnxAddr dest_addr;
   if (!message.get_dest(dest_addr)) return;
 
-  if (dest_addr.get_value() == 0x0C72) {
-    FILE_LOG(logINFO) << " *********************** TA ************************* ";
+  ApplicationLayerPayload value;
+  ApplicationLayerServices apci;
+  if (!message.get_application_layer(apci, value)) return;
+
+  if ((dest_addr.get_value() == 0x0C72) &&
+      (apci == ApplicationLayerServices::A_GroupValue_Response))
+  {
+    FILE_LOG(logINFO) << "Got TA=" << value.get_value()[1];
   }
 
+}
+
+bool AppGraphTemperature::Init()
+{
+  FILE_LOG(logINFO) << "Registering...";
+  if (!m_knx->Register(this)) return false;
+
+  FILE_LOG(logINFO) << "Checking DB...";
+  if (!m_rrd.IsDbValid()) {
+    FILE_LOG(logINFO) << "Creating DB...";
+    m_rrd.CreateDb();
+
+    if (!m_rrd.IsDbValid()) return false;
+  }
+
+  return true;
 }
