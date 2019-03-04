@@ -60,7 +60,7 @@ void KnxManager::Loop()
   }
 }
 
-bool KnxManager::Register(const KnxClientInterface *client)
+bool KnxManager::Register(const IKnxClient *client)
 {
     if (KnxManager::m_clients.insert(client).second) {
         FILE_LOG(logDEBUG) << "Client registered";
@@ -72,7 +72,7 @@ bool KnxManager::Register(const KnxClientInterface *client)
     }
 }
 
-bool KnxManager::Deregister(const KnxClientInterface *client)
+bool KnxManager::Deregister(const IKnxClient *client)
 {
     if (KnxManager::m_clients.erase(client) == 1) {
         FILE_LOG(logDEBUG) << "Client deregistered";

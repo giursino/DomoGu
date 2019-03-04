@@ -20,18 +20,18 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef KNXCLIENTINTERFACE_H
-#define KNXCLIENTINTERFACE_H
+#ifndef IKNXCLIENT_H
+#define IKNXCLIENT_H
 
 #include "KnxMessage.h"
 
-class KnxClientInterface
+class IKnxClient
 {
 public:
-    KnxClientInterface();
-    virtual ~KnxClientInterface();
+  IKnxClient() = default;
+  virtual ~IKnxClient() = default;
 
-    virtual void OnMessageReceived(KnxMessage &message) const = 0;
+  virtual void OnMessageReceived(KnxMessage &message) const = 0;
 };
 
-#endif // KNXCLIENTINTERFACE_H
+#endif // IKNXCLIENT_H

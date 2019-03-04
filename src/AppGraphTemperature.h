@@ -27,13 +27,13 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxManager.h"
 #include <thread>
 
-class AppGraphTemperature : public KnxClientInterface
+class AppGraphTemperature : public IKnxClient
 {
 public:
     AppGraphTemperature(KnxManager *knx);
     ~AppGraphTemperature();
 
-    void Loop();
+    [[ noreturn ]] void Loop();
 
     void OnMessageReceived(KnxMessage &message) const;
 
