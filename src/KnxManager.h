@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "KnxDriver.h"
 #include "KnxMessage.h"
-#include "KnxClientInterface.h"
+#include "IKnxClient.h"
 #include <set>
 #include <thread>
 

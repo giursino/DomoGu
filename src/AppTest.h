@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef APPTEST_H
 #define APPTEST_H
 
-#include "KnxClientInterface.h"
+#include "IKnxClient.h"
 #include "KnxManager.h"
 #include <thread>
 

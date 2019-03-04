@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef APPGRAPHTEMPERATURE_H
 #define APPGRAPHTEMPERATURE_H
 
-#include "KnxClientInterface.h"
+#include "IKnxClient.h"
 #include "KnxManager.h"
 #include <thread>
 
