@@ -20,26 +20,31 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef APPTEST_H
-#define APPTEST_H
+#ifndef APPGRAPHTEMPERATURE_H
+#define APPGRAPHTEMPERATURE_H
 
-#include "IKnxClient.h"
-#include "KnxManager.h"
 #include <thread>
+#include "knx/IKnxClient.h"
+#include "knx/KnxManager.h"
+#include "utils/RRDToolWrapper.h"
 
-class AppTest : public IKnxClient
+class AppGraphTemperature : public IKnxClient
 {
 public:
-    AppTest(KnxManager *knx);
-    ~AppTest();
+  AppGraphTemperature(KnxManager *knx);
+  ~AppGraphTemperature();
 
-    [[ noreturn ]] void Loop();
+  void Loop();
 
-    void OnMessageReceived(KnxMessage &message) const;
+  void OnMessageReceived(KnxMessage &message) const;
 
 private:
-    KnxManager* m_knx;
-    std::thread m_thread;
+  KnxManager* m_knx;
+  std::thread m_thread;
+
+  RRDToolWrapper m_rrd;
+
+  bool Init();
 };
 
-#endif // APPTEST_H
+#endif // APPGRAPHTEMPERATURE_H

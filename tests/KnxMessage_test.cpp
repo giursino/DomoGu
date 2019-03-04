@@ -21,7 +21,7 @@ DEALINGS IN THE SOFTWARE.
 */
 #include <CppUTest/TestHarness.h>
 #include <iostream>
-#include "KnxMessage.h"
+#include "knx/KnxMessage.h"
 
 TEST_GROUP(KnxMessage)
 {
