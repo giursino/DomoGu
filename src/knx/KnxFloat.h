@@ -81,15 +81,17 @@ public:
 
 private:
 
-  /// Format: 2 octets F_16;
-  /// Octect nb:
-  ///      2_MSB,              1_LSB
-  /// [M E E E E M M M]   [M M M M M M M M]
-  /// FloatValue = (0.01*M)*2^E
-  /// E = [0..15]
-  /// M = [-2048 .. 2047]
-  /// For all Datapoint Types 9.0xx, the encoded value 7FFFh shall always be used
-  /// to denote invalid data.
+  /**
+   * Format: 2 octets F_16;
+   * Octect nb:
+   *      2_MSB,              1_LSB
+   * [M E E E E M M M]   [M M M M M M M M]
+   * FloatValue = (0.01*M)*2^E
+   * E = [0..15]
+   * M = [-2048 .. 2047]
+   * For all Datapoint Types 9.0xx, the encoded value 7FFFh shall always be used
+   * to denote invalid data.
+  */
 #pragma pack(1)
   typedef union {
     struct{

@@ -21,6 +21,9 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include "RRDToolWrapper.h"
+#include "log.h"
+
+using namespace Log;
 
 RRDToolWrapper::RRDToolWrapper(const std::string filename):
   m_filename(filename)
@@ -28,27 +31,56 @@ RRDToolWrapper::RRDToolWrapper(const std::string filename):
 
 }
 
-void RRDToolWrapper::CreateDb()
+void RRDToolWrapper::CreateDb() const
 {
+  std::string cmd = "rrdtool create " + m_filename + " -s 30 "
+      "DS:IndoorTemperature1:GAUGE:120:-40:50 "
+      "DS:OutdoorTemperature:GAUGE:120:-40:50 RRA:AVERAGE:0.5:1:2880 "
+      "DS:Thermostat1:GAUGE:120:0:1 RRA:MAX:0.9:1:2880";
 
+  FILE_LOG(logINFO) << "CMD=" << cmd;
 }
 
-bool RRDToolWrapper::IsDbValid()
+bool RRDToolWrapper::IsDbValid() const
 {
+  static bool first_run = true;
+  if (first_run) {
+    first_run = false;
+    return false;
+  }
   return true;
 }
 
-bool RRDToolWrapper::UpdateDb(const std::string value)
+bool RRDToolWrapper::UpdateDb(const Track track, const float value) const
 {
+  switch (track) {
+
+  case Track::IndoorTemperature1:
+    FILE_LOG(logINFO) << "Got TA1=" << value;
+    break;
+
+  case Track::Thermostat1:
+    FILE_LOG(logINFO) << "Got V1=" << value;
+    break;
+
+  case Track::OutdoorTemperature:
+    FILE_LOG(logINFO) << "Got Text=" << value;
+    break;
+
+  default:
+    FILE_LOG(logINFO) << "Not managed";
+    break;
+  }
   return true;
 }
 
-bool RRDToolWrapper::DumpDb(std::string dump)
+bool RRDToolWrapper::DumpDb(std::string dump) const
 {
+  dump = "";
   return true;
 }
 
-void RRDToolWrapper::CreateGraph()
+void RRDToolWrapper::CreateGraph() const
 {
 
 }

@@ -30,11 +30,19 @@ class RRDToolWrapper
 public:
   RRDToolWrapper(const std::string filename);
 
-  void CreateDb();
-  bool IsDbValid();
-  bool UpdateDb(const std::string value);
-  bool DumpDb(std::string dump);
-  void CreateGraph();
+  enum class Track {
+    IndoorTemperature1,
+    Thermostat1,
+    IndoorTemperature2,
+    Thermostat2,
+    OutdoorTemperature,
+  };
+
+  void CreateDb() const;
+  bool IsDbValid() const;
+  bool UpdateDb(const Track track, const float value) const;
+  bool DumpDb(std::string dump) const;
+  void CreateGraph() const;
 
 private:
   std::string m_filename;

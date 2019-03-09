@@ -52,10 +52,27 @@ void AppGraphTemperature::Loop()
   FILE_LOG(logINFO) << "Starting loop...";
   while(running) {
 
-    FILE_LOG(logINFO) << "Get temperature...";
-    KnxMessage msg({0xBC, 0x11, 0x0F, 0x0C, 0x72, 0xE1, 0x00, 0x00});
-    m_knx->SendMessage(msg);
-    std::this_thread::sleep_for(std::chrono::seconds(30));
+    {
+      FILE_LOG(logINFO) << "Get indoor temperature...";
+      KnxMessage msg({0xBC, 0x11, 0x0F, 0x0C, 0x72, 0xE1, 0x00, 0x00});
+      m_knx->SendMessage(msg);
+    }
+    std::this_thread::sleep_for(std::chrono::seconds(10));
+
+    {
+      FILE_LOG(logINFO) << "Get output status...";
+      KnxMessage msg({0xBC, 0x11, 0x0F, 0x0C, 0x6F, 0xE1, 0x00, 0x00});
+      m_knx->SendMessage(msg);
+    }
+
+    std::this_thread::sleep_for(std::chrono::seconds(10));
+
+    {
+      FILE_LOG(logINFO) << "Get outdoor temperature...";
+      KnxMessage msg({0xBC, 0x11, 0x0F, 0x0C, 0x60, 0xE1, 0x00, 0x00});
+      m_knx->SendMessage(msg);
+    }
+    std::this_thread::sleep_for(std::chrono::seconds(10));
   }
 }
 
@@ -71,11 +88,45 @@ void AppGraphTemperature::OnMessageReceived(KnxMessage &message) const
   ApplicationLayerServices apci;
   if (!message.get_application_layer(apci, value)) return;
 
-  if ((dest_addr.get_value() == 0x0C72) &&
-      (apci == ApplicationLayerServices::A_GroupValue_Response))
-  {
-    KnxFloat knx_float_value(value.get_value());
-    FILE_LOG(logINFO) << "Got TA=" << knx_float_value.GetFloat();
+  if (apci == ApplicationLayerServices::A_GroupValue_Response) {
+    switch (dest_addr.get_value()) {
+
+    case 0x0C72:
+    {
+      KnxFloat knx_float_value(value.get_value());
+
+      // TODO: possibile problema di threading
+      m_rrd.UpdateDb(RRDToolWrapper::Track::IndoorTemperature1, knx_float_value.GetFloat());
+      break;
+    }
+
+    case 0x0C6F:
+    {
+      uint8_t status = value.get_value()[0];
+      //      octect 1
+      //  7 6 5 4 3 2 1 0
+      // [- - - - - H C B]
+      // H = hot status
+      // C = cold status
+      // B = boost status
+      uint8_t hot_status = (status & 0x04) >> 2;
+      uint8_t cold_status = (status & 0x02) >> 1;
+      uint8_t boost_status = (status & 0x01);
+
+      // TODO: possibile problema di threading
+      m_rrd.UpdateDb(RRDToolWrapper::Track::Thermostat1, hot_status);
+      break;
+    }
+
+    case 0x0C60:
+    {
+      KnxFloat knx_float_value(value.get_value());
+
+      // TODO: possibile problema di threading
+      m_rrd.UpdateDb(RRDToolWrapper::Track::OutdoorTemperature, knx_float_value.GetFloat());
+      break;
+    }
+    }
   }
 
 }
