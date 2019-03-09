@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #include <iostream>
 #include <string>
 
-using namespace log;
+using namespace Log;
 
 ApplicationLayerPayload::~ApplicationLayerPayload() {;}
 GroupValue::~GroupValue(){;}

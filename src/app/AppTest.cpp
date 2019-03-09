@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 #include <chrono>
 #include <cstdint>
 
-using namespace log;
+using namespace Log;
 
 AppTest::AppTest(KnxManager *knx):
   m_knx(knx)

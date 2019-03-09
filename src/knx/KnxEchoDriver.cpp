@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "log.h"
 
-using namespace log;
+using namespace Log;
 
 KnxEchoDriver::KnxEchoDriver():
     m_buffer()

@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <cstring>
 
-namespace log
+namespace Log
 {
 /*
  * Supported Log Levels.

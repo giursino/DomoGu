@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxEchoDriver.h"
 #include "log.h"
 
-using namespace log;
+using namespace Log;
 
 KnxDriver* KnxDriver::create_knx_driver(KnxDriver::DriverType interface)
 {

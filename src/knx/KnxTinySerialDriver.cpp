@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxTinySerialDriver.h"
 #include "log.h"
 
-using namespace log;
+using namespace Log;
 
 KnxTinySerialDriver::KnxTinySerialDriver():
   m_is_loaded(false),

@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxFakeDriver.h"
 #include "log.h"
 
-using namespace log;
+using namespace Log;
 
 KnxFakeDriver::KnxFakeDriver()
 {

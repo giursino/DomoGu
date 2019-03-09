@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #include "log.h"
 #include "knx/KnxFloat.h"
 
-using namespace log;
+using namespace Log;
 
 AppGraphTemperature::AppGraphTemperature(KnxManager *knx):
   m_knx(knx),

@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #include <iostream>
 
 using namespace std;
-using namespace log;
+using namespace Log;
 
 int main()
 {

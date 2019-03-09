@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 #include "KnxManager.h"
 #include "log.h"
 
-using namespace log;
+using namespace Log;
 
 KnxManager::KnxManager(KnxDriver::DriverType driver)
 {
