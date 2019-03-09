@@ -25,6 +25,7 @@ DEALINGS IN THE SOFTWARE.
 #include <chrono>
 #include <cstdint>
 #include "log.h"
+#include "knx/KnxFloat.h"
 
 using namespace log;
 
@@ -73,7 +74,8 @@ void AppGraphTemperature::OnMessageReceived(KnxMessage &message) const
   if ((dest_addr.get_value() == 0x0C72) &&
       (apci == ApplicationLayerServices::A_GroupValue_Response))
   {
-    FILE_LOG(logINFO) << "Got TA=" << value.get_value()[1];
+    KnxFloat knx_float_value(value.get_value());
+    FILE_LOG(logINFO) << "Got TA=" << knx_float_value.GetFloat();
   }
 
 }

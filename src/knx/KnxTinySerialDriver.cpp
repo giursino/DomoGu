@@ -111,18 +111,17 @@ bool KnxTinySerialDriver::write(const KnxMessage &message)
     success = m_driver->Read(rx_frame);
 
     if (rx_frame.empty()) {
-      FILE_LOG(logINFO) << "timeout";
+      FILE_LOG(logWARNING) << "Send confirmation timeout";
       success=false;
       break;
     }
-
     if ((!success) && (rx_frame[0] == 0x8B)) {
-      FILE_LOG(logINFO) << "send: OK";
+      FILE_LOG(logDEBUG) << "Send confirmed";
       success=true;
       break;
     }
     else if ((!success) && (rx_frame[0] == 0x0B)) {
-      FILE_LOG(logINFO) << "send: ERROR";
+      FILE_LOG(logERROR) << "Send confirmation error";
       success=false;
       break;
     }

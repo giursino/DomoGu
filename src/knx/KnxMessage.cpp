@@ -412,6 +412,10 @@ bool KnxMessage::get_payload(std::vector<uint8_t>& payload) const
   }
 
   switch (apci) {
+
+  case ApplicationLayerServices::A_GroupValue_Read:
+    return false;
+
   case ApplicationLayerServices::A_GroupValue_Write:
   case ApplicationLayerServices::A_GroupValue_Response:
   {
